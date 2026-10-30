@@ -54,4 +54,36 @@ kbd{display:inline-block;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,
 @media(max-width:650px){
   .controls-table th,.controls-table td{padding:8px 10px;font-size:12.5px}
   .notes-body{max-height:260px}
+  
+  .footer{
+  border-top:1px solid #17314b;
+  margin:0 auto;
+  width:90%;
+  padding:22px 0 30px;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  color:#a7c0df;
+  font-size:13px;
+}
+.footer-main{
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:12px;
+}
+.footer-dash{margin:0 15px;color:#52759c}
+.footer-thanks{color:#a7c0df}
+.footer-legal{
+  border-top:1px solid #1a3555;
+  padding-top:14px;
+  font-size:12px;
+  color:#7a93b0;
+  line-height:1.5;
+}
+.footer-legal p{margin:0 0 4px}
+@media(max-width:650px){
+  .footer-main{flex-direction:column}
+}
+  
 }
