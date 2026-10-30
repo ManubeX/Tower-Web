@@ -1,8 +1,26 @@
-
 (() => {
     const cfg = window.TOWER_CONFIG || {};
     const repo = cfg.GITHUB_REPO || "";
     const $ = id => document.getElementById(id);
+
+    // Configurar marked (Markdown → HTML)
+    if (typeof marked !== "undefined") {
+        marked.setOptions({
+            breaks: true,
+            gfm: true
+        });
+    }
+
+    function renderMarkdown(text) {
+        if (!text || !text.trim()) {
+            return "<p>Esta versión no incluye notas de publicación.</p>";
+        }
+        if (typeof marked !== "undefined") {
+            return marked.parse(text);
+        }
+        // Fallback si no carga marked: texto plano escapado
+        return "<pre style='white-space:pre-wrap'>" + esc(text) + "</pre>";
+    }
 
     // Detectar la fase de desarrollo de la Release.
     function phase(t) {
@@ -111,6 +129,30 @@
             "<span>↓</span> DESCARGAR ÚLTIMA VERSIÓN";
 
         $("latest-download").replaceWith(link);
+
+        // Notas de la versión (Markdown) con desplegable
+        const notesWrap = $("latest-notes");
+        const notesBody = $("notes-body");
+        const notesToggle = $("notes-toggle");
+
+        if (r.body && r.body.trim()) {
+            notesWrap.hidden = false;
+            notesBody.innerHTML = renderMarkdown(r.body);
+            notesBody.classList.remove("open");
+            notesToggle.setAttribute("aria-expanded", "false");
+            notesToggle.querySelector(".notes-toggle-label").textContent =
+                "Ver notas de la versión";
+
+            notesToggle.onclick = () => {
+                const open = notesBody.classList.toggle("open");
+                notesToggle.setAttribute("aria-expanded", String(open));
+                notesToggle.querySelector(".notes-toggle-label").textContent =
+                    open ? "Ocultar notas de la versión" : "Ver notas de la versión";
+            };
+        } else {
+            notesWrap.hidden = true;
+            notesBody.innerHTML = "";
+        }
     }
 
     // Mostrar las versiones anteriores.
@@ -151,11 +193,10 @@
             let d = document.createElement("div");
             d.className = "release-details";
 
-            let p = document.createElement("p");
-            p.textContent =
-                r.body || "Esta versión no incluye notas de publicación.";
-
-            d.append(p);
+            let md = document.createElement("div");
+            md.className = "markdown-body";
+            md.innerHTML = renderMarkdown(r.body);
+            d.append(md);
 
             let assets = document.createElement("div");
             assets.className = "asset-links";

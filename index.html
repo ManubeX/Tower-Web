@@ -1,7 +1,238 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#061426"><meta name="description" content="Proyecto Tower: versiones de prueba y novedades."><title>Proyecto Tower</title><link rel="stylesheet" href="css/styles.css"></head><body>
-<header class="topbar"><a class="brand" href="#inicio"><span class="brand-mark">♜</span> PROYECTO TOWER</a><nav><a class="active" href="#inicio">Inicio</a><a href="#versiones">Versiones</a><a href="#probar">Cómo probar</a><a href="#informacion">Información</a><a id="github-link" href="https://github.com" target="_blank" rel="noopener" aria-label="GitHub">◉</a></nav></header>
-<main><section class="hero" id="inicio"><div class="hero-art" role="img" aria-label="Protagonista de Proyecto Tower frente a una torre bajo un cielo nocturno"></div><div class="hero-content"><div class="game-logo"><span class="logo-kicker">PROYECTO</span><span class="logo-title">TOWER</span><span class="logo-sword">†</span></div><p class="tagline">Un pequeño héroe. Una gran torre.</p><article class="latest-card"><div class="latest-top"><span class="phase-pill" id="latest-phase">EN DESARROLLO</span><span class="platform">▦ &nbsp; WINDOWS</span></div><div class="latest-version" id="latest-version">Próximamente</div><p class="latest-title" id="latest-title">La próxima aventura está en camino.</p><a class="download-button disabled" id="latest-download" href="#" aria-disabled="true"><span>↓</span> DESCARGAR ÚLTIMA VERSIÓN</a><div class="release-meta"><span id="latest-date">Aún no hay versiones publicadas</span><span>|</span><span id="latest-size"></span></div><p class="load-error" id="load-error" hidden></p></article></div></section>
-<section class="versions-section section-wrap" id="versiones"><div class="section-heading"><h2><span class="list-symbol">☷</span> Versiones anteriores</h2><p>Consulta el historial completo de versiones.</p></div><div class="release-list" id="release-list"><div class="empty-state">Las versiones publicadas aparecerán aquí.</div></div></section>
-<section class="info-grid section-wrap" id="probar"><article class="info-card"><div class="info-icon">↓</div><h3>Cómo probar</h3><p>Descarga el archivo, descomprímelo y ejecuta el juego. Consulta las instrucciones de cada versión.</p><a href="#instalacion">Ver instrucciones →</a></article><article class="info-card"><div class="info-icon">♧</div><h3>Controles</h3><p>Consulta los controles básicos y los atajos disponibles en la versión que estés probando.</p><a href="#controles">Ver controles →</a></article><article class="info-card"><div class="info-icon">⚠</div><h3>Errores conocidos</h3><p>Revisa los problemas detectados y las limitaciones actuales antes de empezar.</p><a href="#errores">Ver errores →</a></article><article class="info-card" id="informacion"><div class="info-icon">ⓘ</div><h3>Sobre el proyecto</h3><p>Proyecto Tower es un juego de acción y rol en 2D, desarrollado de forma independiente con MonoGame.</p><a href="#sobre">Más información →</a></article></section>
-<section class="details section-wrap"><article id="instalacion"><h2>Cómo instalar y ejecutar</h2><ol><li>Descarga el ZIP de la versión que quieras probar.</li><li>Extrae todo su contenido en una carpeta.</li><li>Ejecuta el archivo del juego (su nombre puede variar según la versión).</li><li>Si encuentras un error, comunícalo indicando la versión y qué estabas haciendo.</li></ol><p class="notice">Estas son versiones de desarrollo. Puede haber errores, cambios importantes o datos que no se conserven entre versiones.</p></article><article id="controles"><h2>Controles</h2><p>Aquí se publicarán los controles correspondientes a cada build. Si una versión incluye controles distintos, se indicará en sus notas.</p></article><article id="errores"><h2>Errores conocidos</h2><p>Consulta las notas de cada versión para conocer los errores detectados. Si encuentras uno nuevo, comunica también los pasos para reproducirlo.</p></article><article id="sobre"><h2>Sobre Proyecto Tower</h2><p>Proyecto Tower es un proyecto personal en desarrollo. Esta página sirve como punto de distribución para las versiones de prueba y como archivo de su evolución.</p></article></section></main>
-<footer class="footer"><span>Proyecto Tower <span class="footer-dash">—</span> En desarrollo</span><span class="footer-thanks">♜ &nbsp; Gracias por formar parte de esta aventura</span></footer><script src="js/config.js"></script><script src="js/app.js"></script></body></html>
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#061426">
+  <meta name="description" content="Proyecto Tower: versiones de prueba y novedades.">
+  <title>Proyecto Tower</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+  <header class="topbar">
+    <a class="brand" href="#inicio"><span class="brand-mark">♜</span> PROYECTO TOWER</a>
+    <nav>
+      <a class="active" href="#inicio">Inicio</a>
+      <a href="#versiones">Versiones</a>
+      <a href="#probar">Cómo probar</a>
+      <a href="#informacion">Información</a>
+      <a id="github-link" href="https://github.com" target="_blank" rel="noopener" aria-label="GitHub">◉</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="hero-art" role="img"
+        aria-label="Protagonista de Proyecto Tower frente a una torre bajo un cielo nocturno"></div>
+      <div class="hero-content">
+        <div class="game-logo">
+          <span class="logo-kicker">PROYECTO</span>
+          <span class="logo-title">TOWER</span>
+          <span class="logo-sword">†</span>
+        </div>
+        <p class="tagline">Un pequeño héroe. Un gran castillo.</p>
+        <article class="latest-card">
+          <div class="latest-top">
+            <span class="phase-pill" id="latest-phase">EN DESARROLLO</span>
+            <span class="platform">▦ &nbsp; WINDOWS</span>
+          </div>
+          <div class="latest-version" id="latest-version">Próximamente</div>
+          <p class="latest-title" id="latest-title">La próxima aventura está en camino.</p>
+          <a class="download-button disabled" id="latest-download" href="#" aria-disabled="true">
+            <span>↓</span> DESCARGAR ÚLTIMA VERSIÓN
+          </a>
+          <div class="release-meta">
+            <span id="latest-date">Aún no hay versiones publicadas</span>
+            <span>|</span>
+            <span id="latest-size"></span>
+          </div>
+          <div class="latest-notes" id="latest-notes" hidden>
+            <button type="button" class="notes-toggle" id="notes-toggle" aria-expanded="false">
+              <span class="notes-toggle-label">Ver notas de la versión</span>
+              <span class="chevron">⌄</span>
+            </button>
+            <div class="notes-body markdown-body" id="notes-body"></div>
+          </div>
+          <p class="load-error" id="load-error" hidden></p>
+        </article>
+      </div>
+    </section>
+
+    <section class="versions-section section-wrap" id="versiones">
+      <div class="section-heading">
+        <h2><span class="list-symbol">☷</span> Versiones anteriores</h2>
+        <p>Consulta el historial completo de versiones.</p>
+      </div>
+      <div class="release-list" id="release-list">
+        <div class="empty-state">Las versiones publicadas aparecerán aquí.</div>
+      </div>
+    </section>
+
+    <section class="info-grid section-wrap" id="probar">
+      <article class="info-card">
+        <div class="info-icon">↓</div>
+        <h3>Cómo probar</h3>
+        <p>Descarga el archivo, descomprímelo y ejecuta el juego. Consulta las instrucciones de cada versión.</p>
+        <a href="#instalacion">Ver instrucciones →</a>
+      </article>
+      <article class="info-card">
+        <div class="info-icon">♧</div>
+        <h3>Controles</h3>
+        <p>Consulta los controles básicos y los atajos disponibles en la versión que estés probando.</p>
+        <a href="#controles">Ver controles →</a>
+      </article>
+      <article class="info-card">
+        <div class="info-icon">⚠</div>
+        <h3>Errores conocidos</h3>
+        <p>Revisa los problemas detectados y las limitaciones actuales antes de empezar.</p>
+        <a href="#errores">Ver errores →</a>
+      </article>
+      <article class="info-card" id="informacion">
+        <div class="info-icon">ⓘ</div>
+        <h3>Sobre el proyecto</h3>
+        <p>Proyecto Tower es un juego de acción y rol en 2D, desarrollado de forma independiente con MonoGame.</p>
+        <a href="#sobre">Más información →</a>
+      </article>
+    </section>
+
+    <section class="details section-wrap">
+      <article id="instalacion">
+        <h2>Cómo instalar y ejecutar</h2>
+        <ol>
+          <li>Descarga el ZIP de la versión que quieras probar.</li>
+          <li>Extrae todo su contenido en una carpeta.</li>
+          <li>Ejecuta el archivo del juego (su nombre puede variar según la versión).</li>
+          <li>Si encuentras un error, comunícalo indicando la versión y qué estabas haciendo.</li>
+        </ol>
+        <p class="notice">Estas son versiones de desarrollo. Puede haber errores, cambios importantes o datos que no se
+          conserven entre versiones.</p>
+      </article>
+
+      <article id="controles" class="controls-article">
+        <h2>Controles</h2>
+
+        <h3 class="controls-subtitle">⚔️ Durante la partida</h3>
+        <div class="controls-table-wrap">
+          <table class="controls-table">
+            <thead>
+              <tr>
+                <th>Tecla</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd></td>
+                <td>Moverse</td>
+              </tr>
+              <tr>
+                <td><kbd>Ratón</kbd></td>
+                <td>Apuntar y orientar los ataques</td>
+              </tr>
+              <tr>
+                <td><kbd>Espacio</kbd> / <kbd>Clic izquierdo</kbd></td>
+                <td>Atacar con el arma equipada</td>
+              </tr>
+              <tr>
+                <td><kbd>Clic derecho</kbd></td>
+                <td>Usar la habilidad activa del arma, si está desbloqueada</td>
+              </tr>
+              <tr>
+                <td><kbd>Mayús izquierdo</kbd></td>
+                <td>Esquivar</td>
+              </tr>
+              <tr>
+                <td><kbd>Tab</kbd></td>
+                <td>Cambiar de arma</td>
+              </tr>
+              <tr>
+                <td><kbd>1</kbd> / <kbd>2</kbd> / <kbd>3</kbd></td>
+                <td>Seleccionar espada, arco o grimorio</td>
+              </tr>
+              <tr>
+                <td><kbd>Q</kbd> / <kbd>R</kbd></td>
+                <td>Usar poción de vida / maná</td>
+              </tr>
+              <tr>
+                <td><kbd>E</kbd></td>
+                <td>Interactuar con cofres, comerciantes y objetos</td>
+              </tr>
+              <tr>
+                <td><kbd>I</kbd></td>
+                <td>Abrir el inventario</td>
+              </tr>
+              <tr>
+                <td><kbd>K</kbd></td>
+                <td>Abrir el árbol de habilidades</td>
+              </tr>
+              <tr>
+                <td><kbd>M</kbd></td>
+                <td>Abrir el mapa</td>
+              </tr>
+              <tr>
+                <td><kbd>Esc</kbd></td>
+                <td>Pausar la partida</td>
+              </tr>
+              <tr>
+                <td><kbd>F5</kbd></td>
+                <td>Guardado rápido</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="controls-subtitle">🎒 Inventario y comercio</h3>
+        <ul class="controls-list">
+          <li><strong>Clic izquierdo + arrastrar:</strong> mover objetos entre huecos.</li>
+          <li><strong>Clic derecho:</strong> usar, equipar o transferir un objeto, según el contexto.</li>
+          <li><strong>Mayús + clic izquierdo:</strong> transferir objetos rápidamente entre inventario y cofre.</li>
+          <li><kbd>T</kbd> / <kbd>G</kbd>: recoger todo del cofre / guardar todo lo de la mochila.</li>
+          <li><strong>En la tienda:</strong> clic izquierdo para comprar; clic derecho para vender. Mantén
+            <kbd>Mayús</kbd> al hacer clic para comprar o vender una pila completa.</li>
+        </ul>
+
+        <h3 class="controls-subtitle">✨ Habilidades y mapa</h3>
+        <ul class="controls-list">
+          <li><kbd>K</kbd>: abrir o cerrar el árbol de habilidades. Haz clic en una habilidad para desbloquearla si
+            cumples sus requisitos y tienes puntos disponibles.</li>
+          <li><kbd>M</kbd>: abrir o cerrar el mapa de la dungeon.</li>
+          <li><kbd>Esc</kbd>: cerrar estas pantallas.</li>
+        </ul>
+
+        <h3 class="controls-subtitle">📜 Menús</h3>
+        <ul class="controls-list">
+          <li><kbd>W</kbd> / <kbd>S</kbd> o <kbd>↑</kbd> / <kbd>↓</kbd>: mover la selección.</li>
+          <li><kbd>Enter</kbd> / <kbd>Espacio</kbd> / <kbd>Clic izquierdo</kbd>: aceptar.</li>
+          <li><kbd>Esc</kbd>: volver atrás, cerrar una confirmación o salir, según el menú.</li>
+          <li><kbd>F11</kbd> / <kbd>Alt</kbd> + <kbd>Enter</kbd>: alternar entre ventana y pantalla completa sin bordes.
+          </li>
+        </ul>
+      </article>
+
+      <article id="errores">
+        <h2>Errores conocidos</h2>
+        <p>Consulta las notas de cada versión para conocer los errores detectados. Si encuentras uno nuevo, comunica
+          también los pasos para reproducirlo.</p>
+      </article>
+
+      <article id="sobre">
+        <h2>Sobre Proyecto Tower</h2>
+        <p>Proyecto Tower es un proyecto personal en desarrollo. Esta página sirve como punto de distribución para las
+          versiones de prueba y como archivo de su evolución.</p>
+      </article>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>Proyecto Tower <span class="footer-dash">—</span> En desarrollo</span>
+    <span class="footer-thanks">♜ &nbsp; Gracias por formar parte de esta aventura</span>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/app.js"></script>
+</body>
+
+</html>
