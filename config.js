@@ -4,8 +4,8 @@ window.TOWER_CONFIG = {
   gameName: "Proyecto Tower",
   // Escribe el propietario y el nombre del repositorio público donde crearás las Releases.
   // Ejemplo de formato (solo formato, no es un dato real): owner: "tu-usuario", repo: "Tower-Downloads"
-  owner: "CAMBIA-ESTO",
-  repo: "CAMBIA-ESTO",
+  owner: "ManubeX",
+  repo: "Tower-Downloads",
   // Opcional: elige si el botón principal admite versiones preliminares (prereleases).
   allowPrereleaseAsLatest: true,
   channelLabel: "VERSIONES PARA TESTERS",
