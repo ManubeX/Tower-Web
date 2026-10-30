@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101114">
+  <meta name="description" content="Descargas, notas e información para probar Proyecto Tower.">
+  <title>Proyecto Tower · Zona de pruebas</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="config.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="topbar"><a class="wordmark" href="#inicio" aria-label="Proyecto Tower, inicio"><span class="mark">T</span><span>PROYECTO <b>TOWER</b></span></a><a class="top-link" id="repo-link" href="#versiones" target="_blank" rel="noreferrer">Repositorio de descargas ↗</a></header>
+  <main id="inicio">
+    <section class="hero">
+      <div class="hero-copy"><p class="eyebrow"><span class="live-dot"></span> ZONA DE PRUEBAS <span class="eyebrow-sep">/</span> <span id="channel-label">VERSIÓN EN DESARROLLO</span></p>
+        <h1>El siguiente paso<br>empieza <em>jugando.</em></h1>
+        <p class="intro">Bienvenido al espacio de pruebas de Proyecto Tower. Descarga la versión más reciente, consulta los cambios y comparte cualquier problema que encuentres.</p>
+        <div class="download-row"><a class="button button-primary disabled" id="latest-download" href="#versiones" aria-disabled="true"><span>Descargar última versión</span><span aria-hidden="true">↓</span></a><span class="version-meta" id="latest-meta">Cargando versiones…</span></div>
+        <p class="release-error" id="load-error" role="status" hidden></p>
+      </div>
+      <div class="hero-art" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="tower"><div class="tower-cap"></div><div class="tower-body"><i></i><i></i><i></i></div><div class="tower-base"></div></div><span class="art-star star-a">✳</span><span class="art-star star-b">·</span><span class="art-caption">BUILD · TEST · REPEAT</span></div>
+    </section>
+    <div class="ticker"><span>GRACIAS POR PROBAR TOWER</span><span>·</span><span>ESTO ES UNA VERSIÓN DE PRUEBA</span><span>·</span><span>GRACIAS POR PROBAR TOWER</span></div>
+    <section class="section release-section" id="versiones"><div class="section-head"><div><p class="eyebrow">01 — DESCARGAS</p><h2>Versiones y cambios</h2></div><a class="text-link" id="all-releases" href="#versiones" target="_blank" rel="noreferrer">Ver todas las releases ↗</a></div><div id="release-list" class="release-list"><div class="loading-card">Buscando las versiones disponibles…</div></div></section>
+    <section class="section guide-section" id="guia"><div class="section-head"><div><p class="eyebrow">02 — EMPIEZA AQUÍ</p><h2>Instalación</h2></div><p class="section-note">Unos pasos rápidos para empezar a jugar.</p></div><div class="steps"><article><span class="step-num">01</span><h3>Descarga el ZIP</h3><p>Elige la versión más reciente y guarda el archivo en tu equipo.</p></article><article><span class="step-num">02</span><h3>Extrae la carpeta</h3><p>Haz clic derecho en el ZIP y selecciona «Extraer todo…». No ejecutes el juego dentro del ZIP.</p></article><article><span class="step-num">03</span><h3>Inicia Tower</h3><p>Abre la carpeta extraída y ejecuta el archivo indicado en las notas de esa versión.</p></article></div><p class="install-note" id="install-note"></p></section>
+    <section class="section details-section"><div class="detail-grid"><article class="detail-card"><p class="eyebrow">03 — CONTROLES</p><h2>Cómo jugar</h2><div id="controls-list" class="key-list"></div></article><article class="detail-card known-card"><p class="eyebrow">04 — A TENER EN CUENTA</p><h2>Problemas conocidos</h2><ul id="issues-list" class="issue-list"></ul></article></div></section>
+    <section class="feedback"><div><p class="eyebrow">¿ENCONTRASTE ALGO?</p><h2>Tu feedback ayuda a<br>mejorar Tower.</h2></div><a class="button button-outline" id="feedback-link" href="#versiones" target="_blank" rel="noreferrer">Informar de un problema ↗</a></section>
+  </main>
+  <footer><a class="wordmark footer-mark" href="#inicio"><span class="mark">T</span><span>PROYECTO <b>TOWER</b></span></a><span>Web de pruebas · <span id="footer-year"></span></span><a href="#inicio">Volver arriba ↑</a></footer>
+</body>
+</html>
