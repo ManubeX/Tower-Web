@@ -130,27 +130,17 @@
 
         $("latest-download").replaceWith(link);
 
-        // Notas de la versión (Markdown) con desplegable
+        // Notas de la versión (Markdown) — <details> empieza cerrado
         const notesWrap = $("latest-notes");
         const notesBody = $("notes-body");
-        const notesToggle = $("notes-toggle");
 
         if (r.body && r.body.trim()) {
             notesWrap.hidden = false;
+            notesWrap.open = false;
             notesBody.innerHTML = renderMarkdown(r.body);
-            notesBody.classList.remove("open");
-            notesToggle.setAttribute("aria-expanded", "false");
-            notesToggle.querySelector(".notes-toggle-label").textContent =
-                "Ver notas de la versión";
-
-            notesToggle.onclick = () => {
-                const open = notesBody.classList.toggle("open");
-                notesToggle.setAttribute("aria-expanded", String(open));
-                notesToggle.querySelector(".notes-toggle-label").textContent =
-                    open ? "Ocultar notas de la versión" : "Ver notas de la versión";
-            };
         } else {
             notesWrap.hidden = true;
+            notesWrap.open = false;
             notesBody.innerHTML = "";
         }
     }

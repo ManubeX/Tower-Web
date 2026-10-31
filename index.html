@@ -2,30 +2,41 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#061426">
-  <meta name="description" content="Proyecto Tower: versiones de prueba y novedades.">
-  <title>Proyecto Tower</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#030d19">
+  <meta name="theme-color" content="#030d19" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#030d19" media="(prefers-color-scheme: dark)">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="description" content="Project Tower: versiones de prueba y novedades de un juego de acción y rol en 2D.">
+  <title>Project Tower</title>
+  <link rel="icon" href="assets/icons/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/game_icon_256.png">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 <header class="topbar">
-  <a class="brand" href="#inicio"><span class="brand-mark">♜</span> PROYECTO TOWER</a>
+  <a class="brand" href="#inicio">
+    <img class="brand-icon" src="assets/icons/game_icon_32.png" width="28" height="28" alt="">
+    PROJECT TOWER
+  </a>
   <nav>
     <a class="active" href="#inicio">Inicio</a>
     <a href="#versiones">Versiones</a>
     <a href="#probar">Cómo probar</a>
     <a href="#informacion">Información</a>
-    <a id="github-link" href="https://github.com" target="_blank" rel="noopener" aria-label="GitHub">◉</a>
+    <a id="github-link" href="https://github.com/ManubeX/Tower-Downloads" target="_blank" rel="noopener" aria-label="GitHub">◉</a>
   </nav>
 </header>
 
 <main>
   <section class="hero" id="inicio">
-    <div class="hero-art" role="img" aria-label="Protagonista de Proyecto Tower frente a una torre bajo un cielo nocturno"></div>
+    <div class="hero-art" role="img" aria-label="Protagonista de Project Tower frente a una torre bajo un cielo nocturno"></div>
     <div class="hero-content">
       <div class="game-logo">
-        <span class="logo-kicker">PROYECTO</span>
+        <span class="logo-kicker">PROJECT</span>
         <span class="logo-title">TOWER</span>
         <span class="logo-sword">†</span>
       </div>
@@ -45,13 +56,13 @@
           <span>|</span>
           <span id="latest-size"></span>
         </div>
-        <div class="latest-notes" id="latest-notes" hidden>
-          <button type="button" class="notes-toggle" id="notes-toggle" aria-expanded="false">
+        <details class="latest-notes" id="latest-notes" hidden>
+          <summary class="notes-toggle">
             <span class="notes-toggle-label">Ver notas de la versión</span>
             <span class="chevron">⌄</span>
-          </button>
+          </summary>
           <div class="notes-body markdown-body" id="notes-body"></div>
-        </div>
+        </details>
         <p class="load-error" id="load-error" hidden></p>
       </article>
     </div>
@@ -89,7 +100,7 @@
     <article class="info-card" id="informacion">
       <div class="info-icon">ⓘ</div>
       <h3>Sobre el proyecto</h3>
-      <p>Proyecto Tower es un juego de acción y rol en 2D, desarrollado de forma independiente con MonoGame.</p>
+      <p>Project Tower es un juego de acción y rol en 2D, desarrollado de forma independiente con MonoGame.</p>
       <a href="#sobre">Más información →</a>
     </article>
   </section>
@@ -100,7 +111,7 @@
       <ol>
         <li>Descarga el ZIP de la versión que quieras probar.</li>
         <li>Extrae todo su contenido en una carpeta.</li>
-        <li>Ejecuta el archivo del juego Tower.GameCore.exe (su nombre puede variar según la versión).</li>
+        <li>Ejecuta el archivo del juego <strong>Tower.GameCore.exe</strong> (su nombre puede variar según la versión).</li>
         <li>Si encuentras un error, comunícalo indicando la versión y qué estabas haciendo.</li>
       </ol>
       <p class="notice">Estas son versiones de desarrollo. Puede haber errores, cambios importantes o datos que no se conserven entre versiones.</p>
@@ -108,55 +119,57 @@
 
     <article id="controles" class="controls-article">
       <h2>Controles</h2>
-
-      <h3 class="controls-subtitle">⚔️ Durante la partida</h3>
-      <div class="controls-table-wrap">
-        <table class="controls-table">
-          <thead>
-            <tr><th>Tecla</th><th>Acción</th></tr>
-          </thead>
-          <tbody>
-            <tr><td><kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd></td><td>Moverse</td></tr>
-            <tr><td><kbd>Ratón</kbd></td><td>Apuntar y orientar los ataques</td></tr>
-            <tr><td><kbd>Espacio</kbd> / <kbd>Clic izquierdo</kbd></td><td>Atacar con el arma equipada</td></tr>
-            <tr><td><kbd>Clic derecho</kbd></td><td>Usar la habilidad activa del arma, si está desbloqueada</td></tr>
-            <tr><td><kbd>Mayús izquierdo</kbd></td><td>Esquivar</td></tr>
-            <tr><td><kbd>Tab</kbd></td><td>Cambiar de arma</td></tr>
-            <tr><td><kbd>1</kbd> / <kbd>2</kbd> / <kbd>3</kbd></td><td>Seleccionar espada, arco o grimorio</td></tr>
-            <tr><td><kbd>Q</kbd> / <kbd>R</kbd></td><td>Usar poción de vida / maná</td></tr>
-            <tr><td><kbd>E</kbd></td><td>Interactuar con cofres, comerciantes y objetos</td></tr>
-            <tr><td><kbd>I</kbd></td><td>Abrir el inventario</td></tr>
-            <tr><td><kbd>K</kbd></td><td>Abrir el árbol de habilidades</td></tr>
-            <tr><td><kbd>M</kbd></td><td>Abrir el mapa</td></tr>
-            <tr><td><kbd>Esc</kbd></td><td>Pausar la partida</td></tr>
-            <tr><td><kbd>F5</kbd></td><td>Guardado rápido</td></tr>
-          </tbody>
-        </table>
+      <div class="controls-layout">
+        <div class="controls-col">
+          <h3 class="controls-subtitle">⚔️ Durante la partida</h3>
+          <div class="controls-table-wrap">
+            <table class="controls-table">
+              <thead>
+                <tr><th>Tecla</th><th>Acción</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd></td><td>Moverse</td></tr>
+                <tr><td><kbd>Ratón</kbd></td><td>Apuntar y orientar los ataques</td></tr>
+                <tr><td><kbd>Espacio</kbd> / <kbd>Clic izq.</kbd></td><td>Atacar con el arma equipada</td></tr>
+                <tr><td><kbd>Clic derecho</kbd></td><td>Habilidad activa del arma</td></tr>
+                <tr><td><kbd>Mayús izq.</kbd></td><td>Esquivar</td></tr>
+                <tr><td><kbd>Tab</kbd></td><td>Cambiar de arma</td></tr>
+                <tr><td><kbd>1</kbd> / <kbd>2</kbd> / <kbd>3</kbd></td><td>Espada, arco o grimorio</td></tr>
+                <tr><td><kbd>Q</kbd> / <kbd>R</kbd></td><td>Poción de vida / maná</td></tr>
+                <tr><td><kbd>E</kbd></td><td>Interactuar (cofres, comercio…)</td></tr>
+                <tr><td><kbd>I</kbd></td><td>Inventario</td></tr>
+                <tr><td><kbd>K</kbd></td><td>Árbol de habilidades</td></tr>
+                <tr><td><kbd>M</kbd></td><td>Mapa</td></tr>
+                <tr><td><kbd>Esc</kbd></td><td>Pausar</td></tr>
+                <tr><td><kbd>F5</kbd></td><td>Guardado rápido</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="controls-col">
+          <h3 class="controls-subtitle">🎒 Inventario y comercio</h3>
+          <ul class="controls-list">
+            <li><strong>Clic izq. + arrastrar:</strong> mover objetos.</li>
+            <li><strong>Clic derecho:</strong> usar, equipar o transferir.</li>
+            <li><strong>Mayús + clic izq.:</strong> transferir rápido inventario ↔ cofre.</li>
+            <li><kbd>T</kbd> / <kbd>G</kbd>: recoger todo / guardar todo.</li>
+            <li><strong>Tienda:</strong> clic izq. comprar, clic der. vender. <kbd>Mayús</kbd> + clic = pila completa.</li>
+          </ul>
+          <h3 class="controls-subtitle">✨ Habilidades y mapa</h3>
+          <ul class="controls-list">
+            <li><kbd>K</kbd>: árbol de habilidades (clic para desbloquear si cumples requisitos).</li>
+            <li><kbd>M</kbd>: mapa de la dungeon.</li>
+            <li><kbd>Esc</kbd>: cerrar estas pantallas.</li>
+          </ul>
+          <h3 class="controls-subtitle">📜 Menús</h3>
+          <ul class="controls-list">
+            <li><kbd>W</kbd>/<kbd>S</kbd> o <kbd>↑</kbd>/<kbd>↓</kbd>: mover selección.</li>
+            <li><kbd>Enter</kbd> / <kbd>Espacio</kbd> / clic izq.: aceptar.</li>
+            <li><kbd>Esc</kbd>: volver atrás o cerrar.</li>
+            <li><kbd>F11</kbd> / <kbd>Alt</kbd>+<kbd>Enter</kbd>: pantalla completa.</li>
+          </ul>
+        </div>
       </div>
-
-      <h3 class="controls-subtitle">🎒 Inventario y comercio</h3>
-      <ul class="controls-list">
-        <li><strong>Clic izquierdo + arrastrar:</strong> mover objetos entre huecos.</li>
-        <li><strong>Clic derecho:</strong> usar, equipar o transferir un objeto, según el contexto.</li>
-        <li><strong>Mayús + clic izquierdo:</strong> transferir objetos rápidamente entre inventario y cofre.</li>
-        <li><kbd>T</kbd> / <kbd>G</kbd>: recoger todo del cofre / guardar todo lo de la mochila.</li>
-        <li><strong>En la tienda:</strong> clic izquierdo para comprar; clic derecho para vender. Mantén <kbd>Mayús</kbd> al hacer clic para comprar o vender una pila completa.</li>
-      </ul>
-
-      <h3 class="controls-subtitle">✨ Habilidades y mapa</h3>
-      <ul class="controls-list">
-        <li><kbd>K</kbd>: abrir o cerrar el árbol de habilidades. Haz clic en una habilidad para desbloquearla si cumples sus requisitos y tienes puntos disponibles.</li>
-        <li><kbd>M</kbd>: abrir o cerrar el mapa de la dungeon.</li>
-        <li><kbd>Esc</kbd>: cerrar estas pantallas.</li>
-      </ul>
-
-      <h3 class="controls-subtitle">📜 Menús</h3>
-      <ul class="controls-list">
-        <li><kbd>W</kbd> / <kbd>S</kbd> o <kbd>↑</kbd> / <kbd>↓</kbd>: mover la selección.</li>
-        <li><kbd>Enter</kbd> / <kbd>Espacio</kbd> / <kbd>Clic izquierdo</kbd>: aceptar.</li>
-        <li><kbd>Esc</kbd>: volver atrás, cerrar una confirmación o salir, según el menú.</li>
-        <li><kbd>F11</kbd> / <kbd>Alt</kbd> + <kbd>Enter</kbd>: alternar entre ventana y pantalla completa sin bordes.</li>
-      </ul>
     </article>
 
     <article id="errores">
@@ -165,15 +178,21 @@
     </article>
 
     <article id="sobre">
-      <h2>Sobre Proyecto Tower</h2>
-      <p>Proyecto Tower es un proyecto personal en desarrollo. Esta página sirve como punto de distribución para las versiones de prueba y como archivo de su evolución.</p>
+      <h2>Sobre Project Tower</h2>
+      <p>Project Tower es un proyecto personal en desarrollo. Esta página sirve como punto de distribución para las versiones de prueba y como archivo de su evolución.</p>
     </article>
   </section>
 </main>
 
 <footer class="footer">
-  <span>Proyecto Tower <span class="footer-dash">—</span> En desarrollo</span>
-  <span class="footer-thanks">♜ &nbsp; Gracias por formar parte de esta aventura</span>
+  <div class="footer-main">
+    <span>Project Tower <span class="footer-dash">—</span> En desarrollo</span>
+    <span class="footer-thanks">♜ &nbsp; Gracias por formar parte de esta aventura</span>
+  </div>
+  <div class="footer-legal">
+    <p>© 2024–2026 ManubeX — Todos los derechos reservados.</p>
+    <p>Project Tower es un desarrollo independiente. El contenido de esta web no puede reproducirse sin permiso.</p>
+  </div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
