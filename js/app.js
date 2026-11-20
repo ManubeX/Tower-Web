@@ -16,7 +16,10 @@
             return "<p>Esta versión no incluye notas de publicación.</p>";
         }
         if (typeof marked !== "undefined") {
-            return marked.parse(text);
+            const html = marked.parse(text);
+            return typeof DOMPurify !== "undefined"
+                ? DOMPurify.sanitize(html, { USE_PROFILES: { html: true } })
+                : "<pre style='white-space:pre-wrap'>" + esc(text) + "</pre>";
         }
         // Fallback si no carga marked: texto plano escapado
         return "<pre style='white-space:pre-wrap'>" + esc(text) + "</pre>";
@@ -41,45 +44,41 @@
         return "VERSIÓN";
     }
 
-    // Obtener el número de versión.
+    // Preferir el tag real: conserva sufijos como 0.20.4e.
     function version(r) {
-        let m = ((r.name || "") + " " + (r.tag_name || ""))
-            .match(/(?:v)?(\d+\.\d+(?:\.\d+)?)/);
-
-        return m ? m[1] : (r.tag_name || "—");
+        const tag = (r.tag_name || "").trim();
+        if (tag) return /^v/i.test(tag) ? tag : "v" + tag;
+        const match = (r.name || "").match(/v?\d+\.\d+(?:\.\d+)*(?:[a-z]+)?/i);
+        return match ? (match[0].startsWith("v") ? match[0] : "v" + match[0]) : "—";
     }
 
-    // Comparar versiones numéricamente.
-    // Ejemplo: 0.10.50 > 0.8.6
+    // Ordenar números y sufijos: 0.20.4e > 0.20.4d > 0.20.4.
     function compareVersions(a, b) {
         const parse = r => {
-            return version(r)
-                .split(".")
-                .map(n => parseInt(n, 10) || 0);
+            const match = version(r).match(/v?(\d+(?:\.\d+)*)([a-z]*)/i);
+            return match ? { parts: match[1].split(".").map(Number), suffix: match[2].toLowerCase() }
+                         : { parts: [], suffix: "" };
         };
-
-        const va = parse(a);
-        const vb = parse(b);
-
-        for (let i = 0; i < Math.max(va.length, vb.length); i++) {
-            const na = va[i] || 0;
-            const nb = vb[i] || 0;
-
-            if (na !== nb) {
-                return nb - na;
-            }
+        const va = parse(a), vb = parse(b);
+        for (let i = 0; i < Math.max(va.parts.length, vb.parts.length); i++) {
+            const delta = (vb.parts[i] || 0) - (va.parts[i] || 0);
+            if (delta) return delta;
         }
-
-        // Si tienen el mismo número, ordenar por fecha.
+        const suffixOrder = vb.suffix.localeCompare(va.suffix, "en");
+        if (suffixOrder) return suffixOrder;
         return new Date(b.published_at || b.created_at) -
                new Date(a.published_at || a.created_at);
     }
 
-    // Obtener el título sin la fase de desarrollo.
+    // Mostrar únicamente el nombre descriptivo, sin fase ni versión duplicada.
     function title(r) {
-        return (r.name || r.tag_name || "Nueva versión")
-            .replace(/^(pre[- ]?alpha|alpha|beta|release)\s*/i, "")
-            .trim();
+        let name = (r.name || "").trim();
+        name = name.replace(/^(?:pre[- ]?alpha|alpha|beta|stable|estable|release|versi[oó]n)\b\s*[:—–-]?\s*/i, "");
+        const tag = (r.tag_name || "").replace(/^v/i, "");
+        if (tag) name = name.replace(new RegExp("^v?" + tag.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "(?=\\s|$|[-—–:])", "i"), "").trim();
+        name = name.replace(/^v?\d+\.\d+(?:\.\d+)*(?:[a-z]+)?\s*[:—–-]?\s*/i, "");
+        name = name.replace(/^[:—–-]\s*/, "").trim();
+        return name || "Novedades de SEALSWORN";
     }
 
     // Formatear fecha.
@@ -106,7 +105,7 @@
         $("latest-version").textContent = version(r);
 
         $("latest-title").textContent =
-            title(r) || "Versión de pruebas de TOWER";
+            title(r) || "Versión de pruebas de SEALSWORN";
 
         $("latest-date").textContent =
             "Publicado el " + date(r.published_at || r.created_at);
@@ -172,7 +171,7 @@
                 <span class="phase-pill">${phase(r.name)}</span>
                 <span class="release-number">${version(r)}</span>
                 <span class="release-description">
-                    ${esc(title(r) || "Versión de TOWER")}
+                    ${esc(title(r) || "Versión de SEALSWORN")}
                 </span>
                 <span class="release-date">
                     Publicado el ${date(r.published_at || r.created_at)}
