@@ -545,3 +545,18 @@ kbd{
 @media (max-width:650px) {
   .topbar .brand { font-size: 17px; letter-spacing: .04em; }
 }
+
+/* Pulido móvil: mantener el título legible y evitar desbordamientos. */
+.logo-title { max-width:100%; overflow-wrap:normal; white-space:nowrap; }
+.hero-content { min-width:0; }
+@media (max-width:900px) {
+  .logo-title { font-size:clamp(31px, 5vw, 52px); }
+}
+@media (max-width:650px) {
+  .topbar { gap:4px; }
+  .hero-content { padding-left:14px; padding-right:14px; }
+  .logo-title { font-size:clamp(28px, 8vw, 42px); letter-spacing:0; }
+  .latest-version { font-size:clamp(29px, 9vw, 40px); overflow-wrap:anywhere; }
+  .release-summary { grid-template-columns:72px minmax(60px,auto) minmax(0,1fr) 18px; }
+  .release-number { overflow-wrap:anywhere; font-size:12px; }
+}
