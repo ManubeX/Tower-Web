@@ -313,19 +313,21 @@
         const viewerImg = document.getElementById("shot-viewer-img");
         if (!gallery || !viewer || !viewerImg) return;
         const shots = [...gallery.querySelectorAll(".shot")];
-        let loaded = 0;
-        shots.forEach(shot => {
+        // Precargar miniaturas: las imágenes lazy dentro de una sección oculta
+        // no se descargan automáticamente en algunos navegadores.
+        Promise.all(shots.map(shot => new Promise(resolve => {
             const img = shot.querySelector("img");
-            img.addEventListener("load", () => {
-                loaded++;
-                if (loaded === shots.length) gallery.hidden = false;
-            }, { once:true });
-            img.addEventListener("error", () => { shot.hidden = true; }, { once:true });
+            const probe = new Image();
+            probe.onload = () => resolve(true);
+            probe.onerror = () => { shot.hidden = true; resolve(false); };
+            probe.src = img.getAttribute("src");
             shot.addEventListener("click", () => {
                 viewerImg.src = shot.dataset.full;
                 viewerImg.alt = img.alt;
                 viewer.showModal();
             });
+        }))).then(results => {
+            gallery.hidden = !results.some(Boolean);
         });
         viewer.querySelector(".shot-viewer-close").addEventListener("click", () => viewer.close());
         viewer.addEventListener("click", event => { if (event.target === viewer) viewer.close(); });
