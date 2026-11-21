@@ -148,6 +148,18 @@
     function list(rs) {
         let root = $("release-list");
         let older = rs.slice(1);
+        let showAll = $("show-all-releases");
+        let expanded = false;
+        const renderRows = () => {
+            root.replaceChildren();
+            const visible = expanded ? older : older.slice(0, 5);
+            visible.forEach(r => appendReleaseRow(root, r));
+            showAll.hidden = older.length <= 5;
+            showAll.textContent = expanded ? "Ver menos versiones" : "Ver todas las versiones";
+            showAll.setAttribute("aria-expanded", String(expanded));
+        };
+        showAll.onclick = () => { expanded = !expanded; renderRows(); };
+        if (older.length) { renderRows(); return; }
 
         if (!older.length) {
             root.innerHTML =
@@ -157,7 +169,9 @@
 
         root.innerHTML = "";
 
-        older.forEach(r => {
+    }
+
+    function appendReleaseRow(root, r) {
             let row = document.createElement("article");
             row.className = "release-row";
 
@@ -221,7 +235,6 @@
 
             row.append(b, d);
             root.append(row);
-        });
     }
 
     // Cargar Releases desde GitHub.
@@ -280,8 +293,14 @@
         } catch (e) {
             $("load-error").hidden = false;
 
-            $("load-error").textContent =
-                "No se han podido cargar las versiones. Comprueba que el repositorio sea público.";
+            $("load-error").replaceChildren(
+                document.createTextNode("No se han podido cargar las versiones. "),
+                Object.assign(document.createElement("a"), {
+                    href: "https://github.com/ManubeX/Tower-Downloads/releases",
+                    textContent: "Consultar las descargas en GitHub",
+                    target: "_blank", rel: "noopener"
+                })
+            );
 
             console.error(e);
         }
