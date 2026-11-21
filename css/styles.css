@@ -560,3 +560,15 @@ kbd{
   .release-summary { grid-template-columns:72px minmax(60px,auto) minmax(0,1fr) 18px; }
   .release-number { overflow-wrap:anywhere; font-size:12px; }
 }
+
+/* Ajustes de legibilidad y navegación del historial */
+.phase-pill { white-space:nowrap; }
+.show-all-releases { display:block; margin:18px auto 0; padding:10px 22px; color:#dceaff; background:#0a2745; border:1px solid #235e98; border-radius:8px; cursor:pointer; font:600 13px var(--serif); }
+.show-all-releases:hover { background:#123b61; }
+.show-all-releases[hidden] { display:none; }
+@media(max-width:650px) {
+  .info-grid { gap:14px 0; }
+  .info-card p { font-size:12px; }
+  .info-card h3 { font-size:14px; }
+  .info-icon { font-size:21px; }
+}
