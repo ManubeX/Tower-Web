@@ -589,3 +589,17 @@ kbd{
 .shot-viewer-close{position:absolute;top:8px;right:8px;width:34px;height:34px;border:1px solid #1d4a75;border-radius:50%;background:#041426d9;color:var(--text);font-size:16px;cursor:pointer}
 @media(max-width:760px){.gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.shot-wide,.shot:last-child{grid-column:span 2;grid-row:auto}.shot-caption{font-size:11px;padding:16px 10px 7px}}
 @media(prefers-reduced-motion:reduce){.shot img{transition:none}}
+
+/* Navegación de la galería y controles actualizados */
+.controls-intro{color:#b9cde5;line-height:1.65;margin:0 0 22px;max-width:850px}
+.controls-muted{color:#8297b2;font-weight:400;font-size:.9em}
+.shot[hidden]{display:none}
+.shot-viewer{width:min(1100px,96vw);overflow:visible}
+.shot-viewer-media{position:relative;display:flex;justify-content:center;align-items:center}
+.shot-viewer-media img{max-height:calc(90vh - 58px)}
+.shot-viewer-prev,.shot-viewer-next{position:absolute;top:50%;transform:translateY(-50%);display:grid;place-items:center;width:44px;height:54px;border:1px solid #416b9a;border-radius:8px;background:#020b16b8;color:white;font-size:36px;cursor:pointer}
+.shot-viewer-prev{left:8px}.shot-viewer-next{right:8px}
+.shot-viewer-prev:hover,.shot-viewer-next:hover{background:#0b3b70ed}
+.shot-viewer-meta{display:flex;justify-content:space-between;gap:16px;align-items:center;padding:13px 18px;color:#c1d8f2;font-size:13px}
+.shot-viewer-close{top:-14px;right:-14px;z-index:2}
+@media(max-width:650px){nav{gap:6px}nav a{font-size:10px}.controls-layout{grid-template-columns:1fr}.shot-viewer-prev,.shot-viewer-next{width:34px;height:46px;font-size:28px}}
