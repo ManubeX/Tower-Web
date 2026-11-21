@@ -306,31 +306,69 @@
         }
     }
 
-    // Mostrar la galería solo cuando las miniaturas existan en el servidor.
+    // Galería con navegación circular, teclado, gestos y precarga adyacente.
     function initGallery() {
         const gallery = document.getElementById("capturas");
         const viewer = document.getElementById("shot-viewer");
         const viewerImg = document.getElementById("shot-viewer-img");
+        const viewerTitle = document.getElementById("shot-viewer-title");
+        const viewerCount = document.getElementById("shot-viewer-count");
         if (!gallery || !viewer || !viewerImg) return;
-        const shots = [...gallery.querySelectorAll(".shot")];
-        // Precargar miniaturas: las imágenes lazy dentro de una sección oculta
-        // no se descargan automáticamente en algunos navegadores.
-        Promise.all(shots.map(shot => new Promise(resolve => {
-            const img = shot.querySelector("img");
+        const allShots = [...gallery.querySelectorAll(".shot")];
+        let available = [];
+        let current = 0;
+        let touchStart = null;
+        const preload = index => {
+            if (!available.length) return;
+            const img = new Image();
+            img.src = available[(index + available.length) % available.length].dataset.full;
+        };
+        const show = index => {
+            if (!available.length) return;
+            current = (index + available.length) % available.length;
+            const shot = available[current];
+            viewerImg.src = shot.dataset.full;
+            viewerImg.alt = shot.querySelector("img").alt;
+            viewerTitle.textContent = shot.querySelector(".shot-caption").textContent;
+            viewerCount.textContent = (current + 1) + " / " + available.length;
+            preload(current - 1);
+            preload(current + 1);
+        };
+        Promise.all(allShots.map(shot => new Promise(resolve => {
             const probe = new Image();
-            probe.onload = () => resolve(true);
-            probe.onerror = () => { shot.hidden = true; resolve(false); };
-            probe.src = img.getAttribute("src");
-            shot.addEventListener("click", () => {
-                viewerImg.src = shot.dataset.full;
-                viewerImg.alt = img.alt;
-                viewer.showModal();
-            });
+            probe.onload = () => resolve(shot);
+            probe.onerror = () => { shot.hidden = true; resolve(null); };
+            probe.src = shot.querySelector("img").getAttribute("src");
         }))).then(results => {
-            gallery.hidden = !results.some(Boolean);
+            available = results.filter(Boolean);
+            gallery.hidden = !available.length;
+            available.forEach((shot, index) => {
+                shot.addEventListener("click", () => {
+                    show(index);
+                    viewer.showModal();
+                });
+            });
         });
+        viewer.querySelector(".shot-viewer-prev").addEventListener("click", () => show(current - 1));
+        viewer.querySelector(".shot-viewer-next").addEventListener("click", () => show(current + 1));
         viewer.querySelector(".shot-viewer-close").addEventListener("click", () => viewer.close());
         viewer.addEventListener("click", event => { if (event.target === viewer) viewer.close(); });
+        viewer.addEventListener("keydown", event => {
+            if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+                event.preventDefault();
+                show(current + (event.key === "ArrowRight" ? 1 : -1));
+            }
+        });
+        viewer.addEventListener("touchstart", event => {
+            if (event.touches.length === 1) touchStart = { x:event.touches[0].clientX, y:event.touches[0].clientY };
+        }, { passive:true });
+        viewer.addEventListener("touchend", event => {
+            if (!touchStart || !event.changedTouches.length) return;
+            const dx = event.changedTouches[0].clientX - touchStart.x;
+            const dy = event.changedTouches[0].clientY - touchStart.y;
+            touchStart = null;
+            if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.25) show(current + (dx < 0 ? 1 : -1));
+        }, { passive:true });
     }
 
     initGallery();
