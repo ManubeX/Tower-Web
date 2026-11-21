@@ -23,6 +23,7 @@
   </a>
   <nav>
     <a class="active" href="#inicio">Inicio</a>
+    <a href="#capturas">Capturas</a>
     <a href="#versiones">Versiones</a>
     <a href="#probar">Cómo probar</a>
     <a href="#informacion">Información</a>
@@ -75,11 +76,19 @@
       <button class="shot" type="button" data-full="assets/images/capturas/tienda.webp"><img src="assets/images/capturas/tienda_640.webp" width="640" height="360" loading="lazy" alt="Tienda del mercader con pociones"><span class="shot-caption">La tienda del mercader</span></button>
       <button class="shot" type="button" data-full="assets/images/capturas/jefe.webp"><img src="assets/images/capturas/jefe_640.webp" width="640" height="360" loading="lazy" alt="Combate contra un comandante"><span class="shot-caption">Comandantes de cada dungeon</span></button>
       <button class="shot" type="button" data-full="assets/images/capturas/hechizos.webp"><img src="assets/images/capturas/hechizos_640.webp" width="640" height="360" loading="lazy" alt="Jugador lanzando hechizos con grimorio"><span class="shot-caption">Espada, arco y grimorio</span></button>
-      <button class="shot" type="button" data-full="assets/images/capturas/inventario.webp"><img src="assets/images/capturas/inventario_640.webp" width="640" height="360" loading="lazy" alt="Inventario con estadísticas y equipo"><span class="shot-caption">Inventario, habilidades y compañeros</span></button>
+      <button class="shot" type="button" data-full="assets/images/capturas/inventario.webp"><img src="assets/images/capturas/inventario_640.webp" width="640" height="360" loading="lazy" alt="Inventario con estadísticas y equipo"><span class="shot-caption">Inventario, habilidades y aliados</span></button>
       <button class="shot" type="button" data-full="assets/images/capturas/menu.webp"><img src="assets/images/capturas/menu_640.webp" width="640" height="360" loading="lazy" alt="Menú principal de SEALSWORN"><span class="shot-caption">Menú principal</span></button>
     </div>
   </section>
-  <dialog class="shot-viewer" id="shot-viewer" aria-label="Captura ampliada"><img id="shot-viewer-img" alt=""><button class="shot-viewer-close" type="button" aria-label="Cerrar captura">✕</button></dialog>
+  <dialog class="shot-viewer" id="shot-viewer" aria-label="Captura ampliada">
+    <div class="shot-viewer-media">
+      <img id="shot-viewer-img" alt="">
+      <button class="shot-viewer-prev" type="button" aria-label="Captura anterior">‹</button>
+      <button class="shot-viewer-next" type="button" aria-label="Captura siguiente">›</button>
+    </div>
+    <div class="shot-viewer-meta"><span id="shot-viewer-title"></span><span id="shot-viewer-count" aria-live="polite"></span></div>
+    <button class="shot-viewer-close" type="button" aria-label="Cerrar captura">✕</button>
+  </dialog>
 
   <section class="versions-section section-wrap" id="versiones">
     <div class="section-heading">
@@ -136,54 +145,65 @@
 
     <article id="controles" class="controls-article">
       <h2>Controles</h2>
+      <p class="controls-intro">Se puede jugar con teclado y ratón o con mando (Xbox, PlayStation, Switch Pro o Steam Deck): el juego detecta el que estás usando y cambia los iconos al momento. Todos los controles se pueden cambiar en <strong>Opciones → Controles</strong>, y en el menú de pausa tienes la lista de los que llevas puestos. Abajo, los de por defecto.</p>
       <div class="controls-layout">
         <div class="controls-col">
-          <h3 class="controls-subtitle">⚔️ Durante la partida</h3>
-          <div class="controls-table-wrap">
-            <table class="controls-table">
-              <thead>
-                <tr><th>Tecla</th><th>Acción</th></tr>
-              </thead>
-              <tbody>
-                <tr><td><kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd></td><td>Moverse</td></tr>
-                <tr><td><kbd>Ratón</kbd></td><td>Apuntar y orientar los ataques</td></tr>
-                <tr><td><kbd>Espacio</kbd> / <kbd>Clic izq.</kbd></td><td>Atacar con el arma equipada</td></tr>
-                <tr><td><kbd>Clic derecho</kbd></td><td>Habilidad activa del arma</td></tr>
-                <tr><td><kbd>Mayús izq.</kbd></td><td>Esquivar</td></tr>
-                <tr><td><kbd>Tab</kbd></td><td>Cambiar de arma</td></tr>
-                <tr><td><kbd>1</kbd> / <kbd>2</kbd> / <kbd>3</kbd></td><td>Espada, arco o grimorio</td></tr>
-                <tr><td><kbd>Q</kbd> / <kbd>R</kbd></td><td>Poción de vida / maná</td></tr>
-                <tr><td><kbd>E</kbd></td><td>Interactuar (cofres, comercio…)</td></tr>
-                <tr><td><kbd>I</kbd></td><td>Inventario</td></tr>
-                <tr><td><kbd>K</kbd></td><td>Árbol de habilidades</td></tr>
-                <tr><td><kbd>M</kbd></td><td>Mapa</td></tr>
-                <tr><td><kbd>Esc</kbd></td><td>Pausar</td></tr>
-                <tr><td><kbd>F5</kbd></td><td>Guardado rápido</td></tr>
-              </tbody>
-            </table>
-          </div>
+          <h3 class="controls-subtitle">⌨️ Teclado y ratón</h3>
+          <div class="controls-table-wrap"><table class="controls-table"><thead><tr><th>Tecla</th><th>Acción</th></tr></thead><tbody>
+            <tr><td><kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd></td><td>Moverse</td></tr>
+            <tr><td><kbd>Ratón</kbd></td><td>Apuntar el arco y los hechizos</td></tr>
+            <tr><td><kbd>Espacio</kbd> / <kbd>Clic izq.</kbd></td><td>Atacar con el arma equipada</td></tr>
+            <tr><td><kbd>Clic der.</kbd></td><td>Habilidad activa del arma</td></tr>
+            <tr><td><kbd>C</kbd></td><td>Segunda habilidad</td></tr>
+            <tr><td><kbd>F</kbd></td><td>Grito de guerra</td></tr>
+            <tr><td><kbd>Mayús</kbd></td><td>Esquivar</td></tr>
+            <tr><td><kbd>Tab</kbd> / <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd></td><td>Cambiar de arma (espada, arco, grimorio)</td></tr>
+            <tr><td><kbd>Q</kbd> / <kbd>R</kbd></td><td>Huecos rápidos: poción de vida / maná</td></tr>
+            <tr><td><kbd>E</kbd></td><td>Interactuar (cofres, tienda, objetos)</td></tr>
+            <tr><td><kbd>I</kbd> · <kbd>K</kbd> · <kbd>N</kbd> · <kbd>M</kbd></td><td>Inventario · Habilidades · Aliados · Mapa</td></tr>
+            <tr><td><kbd>Esc</kbd></td><td>Pausa</td></tr>
+            <tr><td><kbd>F5</kbd></td><td>Guardado rápido</td></tr>
+            <tr><td><kbd>F11</kbd> / <kbd>Alt</kbd>+<kbd>Enter</kbd></td><td>Pantalla completa</td></tr>
+          </tbody></table></div>
         </div>
         <div class="controls-col">
-          <h3 class="controls-subtitle">🎒 Inventario y comercio</h3>
+          <h3 class="controls-subtitle">🎮 Mando <span class="controls-muted">(Xbox / PlayStation)</span></h3>
+          <div class="controls-table-wrap"><table class="controls-table"><thead><tr><th>Xbox <span class="controls-muted">(PlayStation)</span></th><th>Acción</th></tr></thead><tbody>
+            <tr><td>Stick izq.</td><td>Moverse</td></tr>
+            <tr><td>Stick der.</td><td>Apuntar y mirar hacia un lado</td></tr>
+            <tr><td><kbd>RT</kbd> <span class="controls-muted">(R2)</span></td><td>Atacar</td></tr>
+            <tr><td><kbd>LT</kbd> <span class="controls-muted">(L2)</span></td><td>Habilidad activa del arma</td></tr>
+            <tr><td><kbd>RB</kbd> <span class="controls-muted">(R1)</span></td><td>Segunda habilidad</td></tr>
+            <tr><td><kbd>LB</kbd> <span class="controls-muted">(L1)</span></td><td>Grito de guerra</td></tr>
+            <tr><td><kbd>A</kbd> <span class="controls-muted">(✕)</span></td><td>Esquivar</td></tr>
+            <tr><td><kbd>X</kbd> <span class="controls-muted">(□)</span></td><td>Interactuar</td></tr>
+            <tr><td><kbd>Y</kbd> <span class="controls-muted">(△)</span></td><td>Cambiar de arma</td></tr>
+            <tr><td>Cruceta <kbd>←</kbd> / <kbd>→</kbd></td><td>Huecos rápidos: poción de vida / maná</td></tr>
+            <tr><td>Cruceta <kbd>↑</kbd> / <kbd>↓</kbd></td><td>Habilidades / Mapa</td></tr>
+            <tr><td>View <span class="controls-muted">(Create)</span></td><td>Inventario</td></tr>
+            <tr><td>Menu <span class="controls-muted">(Options)</span></td><td>Pausa</td></tr>
+          </tbody></table></div>
+        </div>
+        <div class="controls-col">
+          <h3 class="controls-subtitle">🎒 Inventario, cofres y tienda</h3>
           <ul class="controls-list">
-            <li><strong>Clic izq. + arrastrar:</strong> mover objetos.</li>
-            <li><strong>Clic derecho:</strong> usar, equipar o transferir.</li>
-            <li><strong>Mayús + clic izq.:</strong> transferir rápido inventario ↔ cofre.</li>
-            <li><kbd>T</kbd> / <kbd>G</kbd>: recoger todo / guardar todo.</li>
-            <li><strong>Tienda:</strong> clic izq. comprar, clic der. vender. <kbd>Mayús</kbd> + clic = pila completa.</li>
+            <li><strong>Arrastrar:</strong> mover un objeto; soltarlo fuera de la ventana lo tira al suelo.</li>
+            <li><strong>Clic derecho:</strong> usar o equipar.</li>
+            <li><strong>Mayús + clic:</strong> pasar un objeto al otro lado (mochila ↔ cofre).</li>
+            <li>Arrastrar un consumible a un hueco <kbd>Q</kbd> o <kbd>R</kbd> lo asigna.</li>
+            <li><strong>Cofre:</strong> <kbd>T</kbd> tomar todo (y el oro) · <kbd>G</kbd> guardar todo.</li>
+            <li><strong>Tienda:</strong> clic para comprar · clic derecho en tu mochila para vender al 40 %. Con Mayús, la pila entera.</li>
+            <li>Con mando, cada pantalla muestra abajo sus botones.</li>
           </ul>
-          <h3 class="controls-subtitle">✨ Habilidades y mapa</h3>
+        </div>
+        <div class="controls-col">
+          <h3 class="controls-subtitle">📖 Menús y libro</h3>
           <ul class="controls-list">
-            <li><kbd>K</kbd>: árbol de habilidades (clic para desbloquear si cumples requisitos).</li>
-            <li><kbd>M</kbd>: mapa de la dungeon.</li>
-            <li><kbd>Esc</kbd>: cerrar estas pantallas.</li>
-          </ul>
-          <h3 class="controls-subtitle">📜 Menús</h3>
-          <ul class="controls-list">
-            <li><kbd>W</kbd>/<kbd>S</kbd> o <kbd>↑</kbd>/<kbd>↓</kbd>: mover selección.</li>
-            <li><kbd>Enter</kbd> / <kbd>Espacio</kbd> / clic izq.: aceptar.</li>
-            <li><kbd>Esc</kbd>: volver atrás o cerrar.</li>
-            <li><kbd>F11</kbd> / <kbd>Alt</kbd>+<kbd>Enter</kbd>: pantalla completa.</li>
+            <li><kbd>W</kbd>/<kbd>S</kbd> o <kbd>↑</kbd>/<kbd>↓</kbd> (cruceta o stick): mover la selección.</li>
+            <li><kbd>Enter</kbd> / <kbd>Espacio</kbd> / clic (<kbd>A</kbd>): aceptar.</li>
+            <li><kbd>Esc</kbd> (<kbd>B</kbd>): volver atrás o cerrar.</li>
+            <li><kbd>Tab</kbd> / <kbd>Mayús</kbd>+<kbd>Tab</kbd> (gatillos o botones superiores): pasar de pestaña en el libro (inventario, habilidades, aliados y mapa).</li>
+            <li><strong>Habilidades:</strong> clic en una habilidad para desbloquearla si cumples los requisitos.</li>
           </ul>
         </div>
       </div>
