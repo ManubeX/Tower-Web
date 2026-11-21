@@ -306,5 +306,31 @@
         }
     }
 
+    // Mostrar la galería solo cuando las miniaturas existan en el servidor.
+    function initGallery() {
+        const gallery = document.getElementById("capturas");
+        const viewer = document.getElementById("shot-viewer");
+        const viewerImg = document.getElementById("shot-viewer-img");
+        if (!gallery || !viewer || !viewerImg) return;
+        const shots = [...gallery.querySelectorAll(".shot")];
+        let loaded = 0;
+        shots.forEach(shot => {
+            const img = shot.querySelector("img");
+            img.addEventListener("load", () => {
+                loaded++;
+                if (loaded === shots.length) gallery.hidden = false;
+            }, { once:true });
+            img.addEventListener("error", () => { shot.hidden = true; }, { once:true });
+            shot.addEventListener("click", () => {
+                viewerImg.src = shot.dataset.full;
+                viewerImg.alt = img.alt;
+                viewer.showModal();
+            });
+        });
+        viewer.querySelector(".shot-viewer-close").addEventListener("click", () => viewer.close());
+        viewer.addEventListener("click", event => { if (event.target === viewer) viewer.close(); });
+    }
+
+    initGallery();
     init();
 })();
