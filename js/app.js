@@ -416,7 +416,8 @@
                     const title = titleFromName(n.replace(/\.webp$/i, ""));
                     return { full:root+n, thumb:root+n.replace(/\.webp$/i,"_640.webp"), title, alt:"Captura de SEALSWORN: "+title };
                 });
-                status.textContent = shots.length ? "" : "Todavía no hay capturas disponibles.";
+                if (!shots.length) throw new Error("No se encontraron parejas de capturas");
+                status.textContent = "";
                 render();
             })
             .catch(error => {
