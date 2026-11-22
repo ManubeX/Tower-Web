@@ -99,6 +99,22 @@
         }[c]));
     }
 
+    // Metadatos públicos de los archivos adjuntos a cada GitHub Release.
+    function fileSize(bytes) {
+        if (!Number.isFinite(bytes) || bytes < 0) return "";
+        return bytes >= 1048576
+            ? (bytes / 1048576).toLocaleString("es-ES", { maximumFractionDigits: 1 }) + " MB"
+            : (bytes / 1024).toLocaleString("es-ES", { maximumFractionDigits: 0 }) + " KB";
+    }
+
+    function downloadCount(assets) {
+        return (assets || []).reduce((sum, asset) => sum + (asset.download_count || 0), 0);
+    }
+
+    function downloadLabel(count) {
+        return count.toLocaleString("es-ES") + (count === 1 ? " descarga" : " descargas");
+    }
+
     // Mostrar la última Release.
     function setLatest(r) {
         $("latest-phase").textContent = phase(r.name);
@@ -110,10 +126,10 @@
         $("latest-date").textContent =
             "Publicado el " + date(r.published_at || r.created_at);
 
-        let a = r.assets && r.assets[0];
+        let a = (r.assets || []).find(asset => /\.zip$/i.test(asset.name)) || (r.assets && r.assets[0]);
 
         $("latest-size").textContent = a
-            ? "~ " + Math.round(a.size / 1048576) + " MB"
+            ? fileSize(a.size) + " · " + downloadLabel(downloadCount(r.assets))
             : "";
 
         let link = document.createElement("a");
@@ -212,7 +228,15 @@
                 x.rel = "noopener";
                 x.textContent = "↓ " + a.name;
 
-                assets.append(x);
+                const meta = document.createElement("span");
+                meta.className = "asset-meta";
+                meta.textContent = [fileSize(a.size), downloadLabel(a.download_count || 0)]
+                    .filter(Boolean).join(" · ");
+
+                const item = document.createElement("div");
+                item.className = "asset-item";
+                item.append(x, meta);
+                assets.append(item);
             });
 
             if (!r.assets || !r.assets.length) {
