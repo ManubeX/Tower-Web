@@ -306,48 +306,81 @@
         }
     }
 
-    // Galería con navegación circular, teclado, gestos y precarga adyacente.
+    // Galería automática: cualquier pareja nombre.webp + nombre_640.webp
+    // subida a assets/images/capturas aparece sin modificar la web.
     function initGallery() {
         const gallery = document.getElementById("capturas");
+        const grid = document.getElementById("gallery-grid");
+        const toggle = document.getElementById("gallery-toggle");
+        const status = document.getElementById("gallery-status");
         const viewer = document.getElementById("shot-viewer");
         const viewerImg = document.getElementById("shot-viewer-img");
         const viewerTitle = document.getElementById("shot-viewer-title");
         const viewerCount = document.getElementById("shot-viewer-count");
-        if (!gallery || !viewer || !viewerImg) return;
-        const allShots = [...gallery.querySelectorAll(".shot")];
-        let available = [];
+        if (!gallery || !grid || !viewer || !viewerImg) return;
+
+        const fallback = [{"full":"assets/images/capturas/01_torbellino_cementerio.webp","thumb":"assets/images/capturas/01_torbellino_cementerio_640.webp","alt":"Ataque giratorio en el cementerio","title":"Torbellino en el cementerio"},{"full":"assets/images/capturas/02_nova_circulo_nigromante.webp","thumb":"assets/images/capturas/02_nova_circulo_nigromante_640.webp","alt":"Hechizo de nova en el círculo del nigromante","title":"Nova en el círculo del nigromante"},{"full":"assets/images/capturas/03_lluvia_flechas_galeria.webp","thumb":"assets/images/capturas/03_lluvia_flechas_galeria_640.webp","alt":"Ataque de lluvia de flechas en una galería","title":"Lluvia de flechas"},{"full":"assets/images/capturas/04_rayo_mausoleo.webp","thumb":"assets/images/capturas/04_rayo_mausoleo_640.webp","alt":"Hechizo de rayo en el mausoleo","title":"Rayo en el mausoleo"},{"full":"assets/images/capturas/05_gran_entrada.webp","thumb":"assets/images/capturas/05_gran_entrada_640.webp","alt":"Gran entrada de la mazmorra","title":"La gran entrada"},{"full":"assets/images/capturas/06_gran_nigromante_primer_plano.webp","thumb":"assets/images/capturas/06_gran_nigromante_primer_plano_640.webp","alt":"Primer plano del Gran Nigromante","title":"El Gran Nigromante"},{"full":"assets/images/capturas/07_rey_esqueleto_primer_plano.webp","thumb":"assets/images/capturas/07_rey_esqueleto_primer_plano_640.webp","alt":"Primer plano del Rey Esqueleto","title":"El Rey Esqueleto"}];
+        const root = "assets/images/capturas/";
+        const api = "https://api.github.com/repos/ManubeX/Tower-Web/contents/" + root + "?ref=main";
+        let shots = [];
+        let expanded = false;
         let current = 0;
         let touchStart = null;
+        const titleFromName = name => name
+            .replace(/^\d+[_-]*/, "")
+            .replace(/[_-]+/g, " ")
+            .replace(/\s+/g, " ")
+            .trim()
+            .replace(/^./, c => c.toUpperCase());
         const preload = index => {
-            if (!available.length) return;
+            if (!shots.length) return;
             const img = new Image();
-            img.src = available[(index + available.length) % available.length].dataset.full;
+            img.src = shots[(index + shots.length) % shots.length].full;
         };
         const show = index => {
-            if (!available.length) return;
-            current = (index + available.length) % available.length;
-            const shot = available[current];
-            viewerImg.src = shot.dataset.full;
-            viewerImg.alt = shot.querySelector("img").alt;
-            viewerTitle.textContent = shot.querySelector(".shot-caption").textContent;
-            viewerCount.textContent = (current + 1) + " / " + available.length;
+            if (!shots.length) return;
+            current = (index + shots.length) % shots.length;
+            const shot = shots[current];
+            viewerImg.src = shot.full;
+            viewerImg.alt = shot.alt;
+            viewerTitle.textContent = shot.title;
+            viewerCount.textContent = (current + 1) + " / " + shots.length;
             preload(current - 1);
             preload(current + 1);
         };
-        Promise.all(allShots.map(shot => new Promise(resolve => {
-            const probe = new Image();
-            probe.onload = () => resolve(shot);
-            probe.onerror = () => { shot.hidden = true; resolve(null); };
-            probe.src = shot.querySelector("img").getAttribute("src");
-        }))).then(results => {
-            available = results.filter(Boolean);
-            gallery.hidden = !available.length;
-            available.forEach((shot, index) => {
-                shot.addEventListener("click", () => {
-                    show(index);
+        const render = () => {
+            grid.replaceChildren();
+            const visible = expanded ? shots : shots.slice(0, 4);
+            visible.forEach((shot, index) => {
+                const button = document.createElement("button");
+                button.type = "button";
+                button.className = "shot" + (index === 0 ? " shot-wide" : "");
+                const img = document.createElement("img");
+                img.src = shot.thumb;
+                img.alt = shot.alt;
+                img.width = 640;
+                img.height = 360;
+                img.loading = "lazy";
+                img.onerror = () => { button.hidden = true; };
+                const caption = document.createElement("span");
+                caption.className = "shot-caption";
+                caption.textContent = shot.title;
+                button.append(img, caption);
+                button.addEventListener("click", () => {
+                    show(shots.indexOf(shot));
                     viewer.showModal();
                 });
+                grid.append(button);
             });
+            toggle.hidden = shots.length <= 4;
+            toggle.textContent = expanded ? "Ver menos capturas" : "Ver todas las capturas (" + shots.length + ")";
+            toggle.setAttribute("aria-expanded", String(expanded));
+            gallery.hidden = !shots.length;
+        };
+        toggle.addEventListener("click", () => {
+            expanded = !expanded;
+            render();
+            if (!expanded) gallery.scrollIntoView({ behavior:"smooth", block:"start" });
         });
         viewer.querySelector(".shot-viewer-prev").addEventListener("click", () => show(current - 1));
         viewer.querySelector(".shot-viewer-next").addEventListener("click", () => show(current + 1));
@@ -369,6 +402,29 @@
             touchStart = null;
             if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.25) show(current + (dx < 0 ? 1 : -1));
         }, { passive:true });
+
+        gallery.hidden = false;
+        status.textContent = "Cargando capturas…";
+        fetch(api, { headers:{ Accept:"application/vnd.github+json" } })
+            .then(res => { if (!res.ok) throw new Error("GitHub API " + res.status); return res.json(); })
+            .then(files => {
+                if (!Array.isArray(files)) throw new Error("Listado inválido");
+                const names = new Set(files.filter(f => f.type === "file").map(f => f.name));
+                const entries = [...names].filter(n => /\.webp$/i.test(n) && !/_640\.webp$/i.test(n) && names.has(n.replace(/\.webp$/i, "_640.webp")));
+                entries.sort((a,b) => a.localeCompare(b, "es", {numeric:true}));
+                shots = entries.map(n => {
+                    const title = titleFromName(n.replace(/\.webp$/i, ""));
+                    return { full:root+n, thumb:root+n.replace(/\.webp$/i,"_640.webp"), title, alt:"Captura de SEALSWORN: "+title };
+                });
+                status.textContent = shots.length ? "" : "Todavía no hay capturas disponibles.";
+                render();
+            })
+            .catch(error => {
+                console.warn("No se pudo actualizar la galería automáticamente:", error);
+                shots = fallback;
+                status.textContent = "Mostrando capturas disponibles. Las nuevas aparecerán cuando vuelva a estar disponible GitHub.";
+                render();
+            });
     }
 
     initGallery();
