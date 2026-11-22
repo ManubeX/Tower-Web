@@ -126,24 +126,47 @@
         $("latest-date").textContent =
             "Publicado el " + date(r.published_at || r.created_at);
 
-        let a = (r.assets || []).find(asset => /\.zip$/i.test(asset.name)) || (r.assets && r.assets[0]);
+        const files = r.assets || [];
+        const installer = files.find(a => /\.exe$/i.test(a.name) && /setup|install|instal|sealsworn/i.test(a.name))
+            || files.find(a => /\.exe$/i.test(a.name));
+        const portable = files.find(a => /\.zip$/i.test(a.name));
+        const primary = installer || portable || files[0];
+        const alternatives = $("download-alternatives");
+        alternatives.replaceChildren();
+        alternatives.hidden = true;
 
-        $("latest-size").textContent = a
-            ? fileSize(a.size) + " · " + downloadLabel(downloadCount(r.assets))
+        const main = $("latest-download");
+        main.href = primary ? primary.browser_download_url : r.html_url;
+        main.target = "_blank";
+        main.rel = "noopener";
+        main.classList.remove("disabled");
+        main.removeAttribute("aria-disabled");
+        main.replaceChildren();
+        const arrow = document.createElement("span");
+        arrow.textContent = "↓";
+        main.append(arrow, document.createTextNode(
+            installer ? " DESCARGAR INSTALADOR (.EXE)" :
+            portable ? " DESCARGAR VERSIÓN PORTABLE (.ZIP)" :
+            " VER DESCARGAS EN GITHUB"
+        ));
+
+        if (installer && portable) {
+            const link = document.createElement("a");
+            link.className = "portable-download";
+            link.href = portable.browser_download_url;
+            link.target = "_blank";
+            link.rel = "noopener";
+            link.textContent = "↓ Descargar versión portable (.zip)";
+            const meta = document.createElement("span");
+            meta.className = "portable-download-meta";
+            meta.textContent = fileSize(portable.size) + " · " + downloadLabel(portable.download_count || 0);
+            alternatives.append(link, meta);
+            alternatives.hidden = false;
+        }
+
+        $("latest-size").textContent = primary
+            ? fileSize(primary.size) + " · " + downloadLabel(primary.download_count || 0)
             : "";
-
-        let link = document.createElement("a");
-
-        link.id = "latest-download";
-        link.className = "download-button";
-        link.href = a ? a.browser_download_url : r.html_url;
-        link.target = "_blank";
-        link.rel = "noopener";
-
-        link.innerHTML =
-            "<span>↓</span> DESCARGAR ÚLTIMA VERSIÓN";
-
-        $("latest-download").replaceWith(link);
 
         // Notas de la versión (Markdown) — <details> empieza cerrado
         const notesWrap = $("latest-notes");
@@ -226,7 +249,9 @@
                 x.href = a.browser_download_url;
                 x.target = "_blank";
                 x.rel = "noopener";
-                x.textContent = "↓ " + a.name;
+                const installerFile = /\\.exe$/i.test(a.name);
+                const portableFile = /\\.zip$/i.test(a.name);
+                x.textContent = "↓ " + (installerFile ? "Instalador (.exe)" : portableFile ? "Versión portable (.zip)" : a.name);
 
                 const meta = document.createElement("span");
                 meta.className = "asset-meta";
