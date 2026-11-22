@@ -71,15 +71,9 @@
 
   <section class="gallery-section section-wrap" id="capturas" hidden>
     <div class="section-heading"><h2><span class="list-symbol">▣</span> Capturas del juego</h2><p>Imágenes de SEALSWORN en desarrollo.</p></div>
-    <div class="gallery-grid">
-      <button class="shot shot-wide" type="button" data-full="assets/images/capturas/01_torbellino_cementerio.webp"><img src="assets/images/capturas/01_torbellino_cementerio_640.webp" width="640" height="360" loading="lazy" alt="Ataque giratorio en el cementerio"><span class="shot-caption">Torbellino en el cementerio</span></button>
-      <button class="shot" type="button" data-full="assets/images/capturas/02_nova_circulo_nigromante.webp"><img src="assets/images/capturas/02_nova_circulo_nigromante_640.webp" width="640" height="360" loading="lazy" alt="Hechizo de nova en el círculo del nigromante"><span class="shot-caption">Nova en el círculo del nigromante</span></button>
-      <button class="shot" type="button" data-full="assets/images/capturas/03_lluvia_flechas_galeria.webp"><img src="assets/images/capturas/03_lluvia_flechas_galeria_640.webp" width="640" height="360" loading="lazy" alt="Ataque de lluvia de flechas en una galería"><span class="shot-caption">Lluvia de flechas</span></button>
-      <button class="shot" type="button" data-full="assets/images/capturas/04_rayo_mausoleo.webp"><img src="assets/images/capturas/04_rayo_mausoleo_640.webp" width="640" height="360" loading="lazy" alt="Hechizo de rayo en el mausoleo"><span class="shot-caption">Rayo en el mausoleo</span></button>
-      <button class="shot" type="button" data-full="assets/images/capturas/05_gran_entrada.webp"><img src="assets/images/capturas/05_gran_entrada_640.webp" width="640" height="360" loading="lazy" alt="Gran entrada de la mazmorra"><span class="shot-caption">La gran entrada</span></button>
-      <button class="shot" type="button" data-full="assets/images/capturas/06_gran_nigromante_primer_plano.webp"><img src="assets/images/capturas/06_gran_nigromante_primer_plano_640.webp" width="640" height="360" loading="lazy" alt="Primer plano del Gran Nigromante"><span class="shot-caption">El Gran Nigromante</span></button>
-      <button class="shot" type="button" data-full="assets/images/capturas/07_rey_esqueleto_primer_plano.webp"><img src="assets/images/capturas/07_rey_esqueleto_primer_plano_640.webp" width="640" height="360" loading="lazy" alt="Primer plano del Rey Esqueleto"><span class="shot-caption">El Rey Esqueleto</span></button>
-    </div>
+    <p class="gallery-status" id="gallery-status" aria-live="polite"></p>
+    <div class="gallery-grid" id="gallery-grid"></div>
+    <div class="gallery-actions"><button type="button" class="show-all-releases" id="gallery-toggle" hidden>Ver todas las capturas</button></div>
   </section>
   <dialog class="shot-viewer" id="shot-viewer" aria-label="Captura ampliada">
     <div class="shot-viewer-media">
