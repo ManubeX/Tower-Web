@@ -603,3 +603,11 @@ kbd{
 .shot-viewer-meta{display:flex;justify-content:space-between;gap:16px;align-items:center;padding:13px 18px;color:#c1d8f2;font-size:13px}
 .shot-viewer-close{top:-14px;right:-14px;z-index:2}
 @media(max-width:650px){nav{gap:6px}nav a{font-size:10px}.controls-layout{grid-template-columns:1fr}.shot-viewer-prev,.shot-viewer-next{width:34px;height:46px;font-size:28px}}
+
+/* Galería escalable: solo cuatro capturas en portada, resto bajo demanda */
+.gallery-actions{display:flex;justify-content:center;margin-top:18px}
+.gallery-actions .show-all-releases{margin:0}
+.gallery-status{color:var(--muted);font-size:13px;margin:10px 0}
+.gallery-status:empty{display:none}
+.gallery-grid .shot-wide{grid-column:span 2;grid-row:span 2}
+@media(max-width:760px){.gallery-grid .shot-wide{grid-column:span 2;grid-row:auto}}
