@@ -249,8 +249,8 @@
                 x.href = a.browser_download_url;
                 x.target = "_blank";
                 x.rel = "noopener";
-                const installerFile = /\\.exe$/i.test(a.name);
-                const portableFile = /\\.zip$/i.test(a.name);
+                const installerFile = /\.exe$/i.test(a.name);
+                const portableFile = /\.zip$/i.test(a.name);
                 x.textContent = "↓ " + (installerFile ? "Instalador (.exe)" : portableFile ? "Versión portable (.zip)" : a.name);
 
                 const meta = document.createElement("span");
