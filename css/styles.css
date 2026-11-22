@@ -615,3 +615,10 @@ kbd{
 /* Metadatos de archivos de Releases */
 .asset-item{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin:6px 0}
 .asset-meta{font-size:12px;color:#a6bcd5;font-variant-numeric:tabular-nums}
+
+/* Instalador recomendado y descarga portable opcional */
+.download-alternatives{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:5px 12px;margin-top:12px;font-size:13px}
+.download-alternatives[hidden]{display:none}
+.portable-download{color:#c9e1ff;text-decoration:underline;text-underline-offset:3px}
+.portable-download:hover{color:#fff}
+.portable-download-meta{color:#8ea9c8;font-size:12px;font-variant-numeric:tabular-nums}
