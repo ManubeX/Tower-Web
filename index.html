@@ -218,18 +218,21 @@
           <h3 class="controls-subtitle">⌨️ Teclado y ratón</h3>
           <div class="controls-table-wrap"><table class="controls-table"><thead><tr><th>Tecla</th><th>Acción</th></tr></thead><tbody>
             <tr><td><kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd></td><td>Moverse</td></tr>
-            <tr><td><kbd>Ratón</kbd></td><td>Apuntar el arco y los hechizos</td></tr>
-            <tr><td><kbd>Espacio</kbd> / <kbd>Clic izq.</kbd></td><td>Atacar con el arma equipada</td></tr>
-            <tr><td><kbd>Clic der.</kbd></td><td>Habilidad activa del arma</td></tr>
+            <tr><td><kbd>Ratón</kbd></td><td>Apuntar (arco y grimorio)</td></tr>
+            <tr><td><kbd>Espacio</kbd> / <kbd>Clic izq.</kbd></td><td>Atacar</td></tr>
+            <tr><td><kbd>Clic der.</kbd></td><td>Habilidad del arma</td></tr>
             <tr><td><kbd>C</kbd></td><td>Segunda habilidad</td></tr>
             <tr><td><kbd>F</kbd></td><td>Grito de guerra</td></tr>
-            <tr><td><kbd>Mayús</kbd></td><td>Esquivar</td></tr>
+            <tr><td><kbd>Mayús izq.</kbd></td><td>Esquivar</td></tr>
             <tr><td><kbd>Tab</kbd> / <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd></td><td>Cambiar de arma (espada, arco, grimorio)</td></tr>
-            <tr><td><kbd>Q</kbd> / <kbd>R</kbd></td><td>Huecos rápidos: poción de vida / maná</td></tr>
+            <tr><td><kbd>Q</kbd> / <kbd>R</kbd></td><td>Poción de vida / de maná (huecos rápidos)</td></tr>
             <tr><td><kbd>E</kbd></td><td>Interactuar (cofres, tienda, objetos)</td></tr>
-            <tr><td><kbd>I</kbd> · <kbd>K</kbd> · <kbd>N</kbd> · <kbd>M</kbd></td><td>Inventario · Habilidades · Aliados · Mapa</td></tr>
+            <tr><td><kbd>I</kbd> · <kbd>K</kbd> · <kbd>N</kbd> · <kbd>M</kbd></td><td>Mochila · Árbol de habilidades · Aliados · Mapa</td></tr>
             <tr><td><kbd>Esc</kbd></td><td>Pausa</td></tr>
             <tr><td><kbd>F5</kbd></td><td>Guardado rápido</td></tr>
+            <tr><td><kbd>F6</kbd></td><td>Nombres de los ataques enemigos</td></tr>
+            <tr><td><kbd>F10</kbd></td><td>Captura de pantalla</td></tr>
+            <tr><td><kbd>F12</kbd></td><td>Reportar un problema</td></tr>
             <tr><td><kbd>F11</kbd> / <kbd>Alt</kbd>+<kbd>Enter</kbd></td><td>Pantalla completa</td></tr>
           </tbody></table></div>
         </div>
@@ -246,13 +249,14 @@
             <tr><td><kbd>X</kbd> <span class="controls-muted">(□)</span></td><td>Interactuar</td></tr>
             <tr><td><kbd>Y</kbd> <span class="controls-muted">(△)</span></td><td>Cambiar de arma</td></tr>
             <tr><td>Cruceta <kbd>←</kbd> / <kbd>→</kbd></td><td>Huecos rápidos: poción de vida / maná</td></tr>
-            <tr><td>Cruceta <kbd>↑</kbd> / <kbd>↓</kbd></td><td>Habilidades / Mapa</td></tr>
-            <tr><td>View <span class="controls-muted">(Create)</span></td><td>Inventario</td></tr>
-            <tr><td>Menu <span class="controls-muted">(Options)</span></td><td>Pausa</td></tr>
+            <tr><td>Cruceta <kbd>↑</kbd> / <kbd>↓</kbd></td><td>Árbol de habilidades / Mapa</td></tr>
+            <tr><td>View <span class="controls-muted">(Create)</span></td><td>Mochila</td></tr>
+            <tr><td>Menu <span class="controls-muted">(Options)</span></td><td>Pausa (reportar un problema desde el menú)</td></tr>
+            <tr><td><kbd>LB</kbd> / <kbd>RB</kbd></td><td>Cambiar de pestaña en los menús</td></tr>
           </tbody></table></div>
         </div>
         <div class="controls-col">
-          <h3 class="controls-subtitle">🎒 Inventario, cofres y tienda</h3>
+          <h3 class="controls-subtitle">🎒 Mochila, cofres y tienda</h3>
           <ul class="controls-list">
             <li><strong>Arrastrar:</strong> mover un objeto; soltarlo fuera de la ventana lo tira al suelo.</li>
             <li><strong>Clic derecho:</strong> usar o equipar.</li>
@@ -269,7 +273,7 @@
             <li><kbd>W</kbd>/<kbd>S</kbd> o <kbd>↑</kbd>/<kbd>↓</kbd> (cruceta o stick): mover la selección.</li>
             <li><kbd>Enter</kbd> / <kbd>Espacio</kbd> / clic (<kbd>A</kbd>): aceptar.</li>
             <li><kbd>Esc</kbd> (<kbd>B</kbd>): volver atrás o cerrar.</li>
-            <li><kbd>Tab</kbd> / <kbd>Mayús</kbd>+<kbd>Tab</kbd> (gatillos o botones superiores): pasar de pestaña en el libro (inventario, habilidades, aliados y mapa).</li>
+            <li><kbd>Tab</kbd> / <kbd>Mayús</kbd>+<kbd>Tab</kbd> (<kbd>LB</kbd> / <kbd>RB</kbd> con mando): pasar de pestaña en el libro (mochila, habilidades, aliados y mapa).</li>
             <li><strong>Habilidades:</strong> clic en una habilidad para desbloquearla si cumples los requisitos.</li>
           </ul>
         </div>
@@ -311,7 +315,7 @@
 })();
 </script>
 <script src="js/config.js"></script>
-<script src="js/i18n.js?v=4ba3a794a3a1"></script>
+<script src="js/i18n.js?v=controls-20261123"></script>
 <script src="js/app.js?v=130d031dcba3"></script>
 </body>
 </html>
