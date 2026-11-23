@@ -644,3 +644,11 @@ kbd{
 /* Identidad visual de Windows en la tarjeta de descarga */
 .platform{display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
 .windows-logo{display:block;flex:none;color:#c7dcfa}
+
+/* Bilingual language picker */
+.language-picker{display:flex;align-items:center;gap:3px;margin-left:15px;border:1px solid #285075;border-radius:7px;padding:3px;flex-shrink:0}
+.language-picker button{border:0;background:transparent;color:#9db8db;font:700 11px var(--serif);padding:6px 8px;border-radius:4px;cursor:pointer}
+.language-picker button[aria-pressed="true"]{background:#1765e9;color:#fff}
+.language-picker button:focus-visible{outline:2px solid #80baff;outline-offset:2px}
+.notes-language-notice{padding:9px 12px;border-left:3px solid #347cce;background:#102743;color:#c5dcfa;font-size:13px}
+@media(max-width:850px){.topbar{gap:8px;padding-left:12px;padding-right:12px}.topbar nav{gap:10px}.language-picker{margin-left:2px}.language-picker button{padding:6px}}
