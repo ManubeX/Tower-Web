@@ -1,18 +1,37 @@
-# Proyecto Tower — Web de distribución
+# SEALSWORN — Sitio web oficial
 
-Web estática azul oscuro para testers. Incluye protagonista, descarga destacada, historial plegable y secciones de instalación, controles y errores.
+> **Todo juramento tiene un precio.**  
+> *Every oath comes at a price.*
 
-## Publicar
-1. Crea un repositorio público `Tower-Web` y sube el contenido de esta carpeta a su raíz.
-2. Edita `js/config.js` y comprueba que `js/config.js` contiene `ManubeX/Tower-Web` y cámbialo si finalmente usas otro nombre de repositorio.
-3. En GitHub: Settings → Pages → Deploy from a branch → `main` → `/(root)` → Save.
-4. Crea las Releases en este mismo repositorio y adjunta el ZIP de cada build.
+**SEALSWORN** es un juego independiente de acción y rol en 2D, ambientado en un mundo de fantasía medieval oscura. Explora una fortaleza llena de peligros, enfréntate a sus enemigos y descubre sus secretos.
 
-## Formato recomendado para cada Release
-- Tag: `v0.1.0`
-- Título: `Pre-Alpha 0.1.0 — Primera versión jugable`
-- Descripción: novedades, cambios y errores conocidos.
-- Asset: ZIP distribuible de Windows.
-- Marca `Set as a pre-release` si corresponde.
+**[🌐 Web oficial](https://sealsworn.pages.dev/)** · **[⚔️ Descargar para Windows](https://sealsworn.pages.dev/#inicio)** · **[𝕏 Novedades en X](https://x.com/Sealsworn)**
 
-La web consulta las Releases públicas automáticamente. La más reciente aparece destacada y las anteriores se pueden desplegar. Mantén tu repositorio principal `Tower` privado; publica aquí solo la web y los ZIP que quieras distribuir.
+## Acerca de este repositorio
+
+Este repositorio contiene **el código de la web pública**, no el código fuente del videojuego. La web incluye información del proyecto, tráiler, capturas, instrucciones de instalación e historial de versiones.
+
+- **Web principal:** [sealsworn.pages.dev](https://sealsworn.pages.dev/)
+- **Despliegue:** Cloudflare Pages, conectado a la rama `main`.
+- **Dirección anterior:** [GitHub Pages](https://manubex.github.io/Tower-Web/) (redirige a la web principal).
+- **Descargas:** se obtienen de las [Releases de Tower-Downloads](https://github.com/ManubeX/Tower-Downloads/releases).
+
+## Probar SEALSWORN
+
+Visita la [web oficial](https://sealsworn.pages.dev/) para descargar la versión de desarrollo más reciente para Windows. Según la versión, puedes elegir el **instalador (.exe)** o la **versión portable (.zip)**. Consulta las notas de cada lanzamiento para conocer novedades y posibles incidencias.
+
+El juego sigue en desarrollo: las funciones y el contenido pueden cambiar.
+
+## Tecnología de la web
+
+Sitio estático construido con HTML, CSS y JavaScript, sin proceso de compilación. La información de versiones se consulta desde las Releases públicas de GitHub. La interfaz ofrece español e inglés.
+
+## Enlaces
+
+- [Web oficial](https://sealsworn.pages.dev/)
+- [X · @Sealsworn](https://x.com/Sealsworn)
+- [Historial de versiones y archivos](https://github.com/ManubeX/Tower-Downloads/releases)
+
+---
+
+**SEALSWORN** · Proyecto independiente en desarrollo.
