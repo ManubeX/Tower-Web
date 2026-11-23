@@ -622,3 +622,21 @@ kbd{
 .portable-download{color:#c9e1ff;text-decoration:underline;text-underline-offset:3px}
 .portable-download:hover{color:#fff}
 .portable-download-meta{color:#8ea9c8;font-size:12px;font-variant-numeric:tabular-nums}
+
+/* Instalación guiada, portable y versiones anteriores */
+.install-methods{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:20px 0}
+.install-method{padding:18px;border:1px solid #244465;border-radius:9px;background:#07182b}
+.install-method h3{margin:0 0 14px}
+.install-method ol{padding-left:20px}
+.install-method li{margin-bottom:9px}
+.install-recommended{display:inline-block;vertical-align:middle;margin-left:6px;padding:3px 7px;border-radius:5px;background:#163e6b;color:#d6eaff;font-size:11px;font-weight:600}
+.install-warning{padding:18px;margin:18px 0;border:1px solid #715b35;border-radius:9px;background:#241d14}
+.install-warning h3{margin-top:0}
+.install-warning a{text-decoration:underline;text-underline-offset:3px}
+.legacy-install{margin:18px 0;border:1px solid #244465;border-radius:8px;background:#07182b}
+.legacy-install summary{padding:16px;cursor:pointer;font-weight:650;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.legacy-install summary::marker{content:""}
+.legacy-install summary::-webkit-details-marker{display:none}
+.legacy-install[open] summary .chevron{transform:rotate(180deg)}
+.legacy-install-body{padding:0 18px 18px}
+@media(max-width:760px){.install-methods{grid-template-columns:1fr}.install-method,.install-warning{padding:15px}}
