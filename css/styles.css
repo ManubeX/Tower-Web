@@ -658,3 +658,8 @@ kbd{
 .trailer-section[hidden],#trailer-nav[hidden]{display:none!important}
 .trailer-player{max-width:980px;margin:20px auto 0;padding:5px;background:#07182b;border:1px solid #27517c;border-radius:12px;box-shadow:0 15px 55px #0008}
 .trailer-player video{display:block;width:100%;aspect-ratio:16/9;height:auto;background:#000;border-radius:8px;object-fit:contain}
+
+/* Official X profile link */
+.topbar .social-x{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.topbar .social-x svg{flex:none;display:block}
+@media(max-width:850px){.topbar .social-x-label{display:none}}
