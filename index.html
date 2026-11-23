@@ -14,7 +14,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-  <link rel="stylesheet" href="css/styles.css?v=4aad3544bac3">
+  <link rel="stylesheet" href="css/styles.css?v=790d0f6d0543">
 </head>
 <body>
 <header class="topbar">
@@ -24,6 +24,7 @@
   </a>
   <nav>
     <a class="active" href="#inicio">Inicio</a>
+    <a href="#trailer" id="trailer-nav" hidden>Tráiler</a>
     <a href="#capturas">Capturas</a>
     <a href="#versiones">Versiones</a>
     <a href="#probar">Cómo probar</a>
@@ -72,6 +73,10 @@
   </section>
 
 
+  <section class="trailer-section section-wrap" id="trailer" hidden>
+    <div class="section-heading"><h2>▶ Tráiler oficial</h2><p>Descubre SEALSWORN en acción.</p></div>
+    <div class="trailer-player"><video id="official-trailer" controls playsinline preload="none" poster="assets/images/capturas/05_gran_entrada_640.webp" aria-label="Tráiler oficial de SEALSWORN"><source src="assets/videos/Sealsworn_trailer_oficial.mp4" type="video/mp4">Tu navegador no admite la reproducción de este vídeo.</video></div>
+  </section>
   <section class="gallery-section section-wrap" id="capturas">
     <div class="section-heading"><h2><span class="list-symbol">▣</span> Capturas del juego</h2><p>Imágenes de SEALSWORN en desarrollo.</p></div>
     <p class="gallery-status" id="gallery-status" aria-live="polite"></p>
@@ -278,6 +283,15 @@
 
 <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"></script>
+<script>
+(function(){
+  const section=document.getElementById("trailer");
+  const nav=document.getElementById("trailer-nav");
+  fetch("assets/videos/Sealsworn_trailer_oficial.mp4",{method:"HEAD"})
+    .then(response=>{if(response.ok && /video|octet-stream/.test(response.headers.get("content-type")||"")){section.hidden=false;nav.hidden=false;}})
+    .catch(()=>{});
+})();
+</script>
 <script src="js/config.js"></script>
 <script src="js/i18n.js?v=d77971d0790e"></script>
 <script src="js/app.js?v=130d031dcba3"></script>
