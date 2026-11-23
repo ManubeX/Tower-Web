@@ -13,7 +13,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-  <link rel="stylesheet" href="css/styles.css?v=748b663a44c7">
+  <link rel="stylesheet" href="css/styles.css?v=aa0c28b7b053">
 </head>
 <body>
 <header class="topbar">
@@ -131,17 +131,58 @@
 
   <section class="details section-wrap">
     <article id="instalacion">
-      <h2>Cómo instalar y ejecutar</h2>
-      <ol>
-        <li>Descarga el ZIP de la versión que quieras probar.</li>
-        <li>Extrae todo su contenido en una carpeta.</li>
-        <li>Ejecuta el archivo del juego <strong>Tower.GameCore.exe</strong> (su nombre puede variar según la versión).</li>
-        <li>Si Windows SmartScreen muestra una advertencia al abrir una versión de prueba, comprueba que el archivo procede de las Releases oficiales. Si confías en su origen, puedes seleccionar <strong>Más información</strong> y después <strong>Ejecutar de todas formas</strong>.</li>
-        <li>Si encuentras un error, comunícalo indicando la versión y qué estabas haciendo.</li>
-      </ol>
-      <p class="notice">Estas son versiones de desarrollo. Puede haber errores, cambios importantes o datos que no se conserven entre versiones.</p>
+      <h2>Cómo instalar y ejecutar SEALSWORN</h2>
+      <p>Desde la <strong>versión 0.21.8</strong> puedes elegir entre una instalación guiada para Windows o una versión portable. Recomendamos el instalador para recibir futuras actualizaciones más fácilmente.</p>
+
+      <div class="install-methods">
+        <section class="install-method">
+          <h3>Instalador de Windows (.exe) <span class="install-recommended">Recomendado</span></h3>
+          <ol>
+            <li>En la última versión, pulsa <strong>Descargar instalador (.exe)</strong>.</li>
+            <li>Cuando termine la descarga, abre el archivo <strong>.exe</strong>.</li>
+            <li>Sigue los pasos del asistente para instalar SEALSWORN. No necesitas permisos de administrador: se instala para tu usuario de Windows.</li>
+            <li>Abre el juego desde el acceso directo creado por el instalador.</li>
+            <li>Cuando haya una nueva versión, el juego podrá avisarte y ofrecerte su descarga e instalación.</li>
+          </ol>
+        </section>
+        <section class="install-method">
+          <h3>Versión portable (.zip)</h3>
+          <ol>
+            <li>Pulsa <strong>Descargar versión portable (.zip)</strong>.</li>
+            <li>Extrae <strong>todo el contenido</strong> del ZIP en una carpeta de tu elección; no ejecutes el juego directamente desde el archivo comprimido.</li>
+            <li>Abre la carpeta extraída y ejecuta el archivo <strong>.exe del juego</strong>.</li>
+          </ol>
+          <p>Esta opción permite jugar sin utilizar el asistente de instalación. Conserva juntos los archivos extraídos y consulta las notas de cada versión antes de actualizar manualmente.</p>
+        </section>
+      </div>
+
+      <div class="install-warning">
+        <h3>¿Windows bloquea el instalador o muestra una advertencia?</h3>
+        <p>Como SEALSWORN es un proyecto independiente en desarrollo, Windows SmartScreen puede mostrar el aviso <strong>«Windows protegió su PC»</strong> al abrir el instalador o el ejecutable.</p>
+        <ol>
+          <li>Comprueba que has descargado el archivo desde las <a href="https://github.com/ManubeX/Tower-Downloads/releases" target="_blank" rel="noopener">Releases oficiales de SEALSWORN en GitHub</a>.</li>
+          <li>Si Windows muestra una advertencia de SmartScreen y confías en el archivo, pulsa <strong>Más información</strong>.</li>
+          <li>Después, si aparece la opción, selecciona <strong>Ejecutar de todas formas</strong> para continuar.</li>
+        </ol>
+        <p><strong>Importante:</strong> no desactives SmartScreen ni el antivirus para instalar el juego. Si el aviso indica que se ha detectado una amenaza o no puedes verificar el origen del archivo, no fuerces la ejecución y consulta la publicación oficial.</p>
+      </div>
+
+      <details class="legacy-install">
+        <summary>Instalación de versiones anteriores a la 0.21.8 <span class="chevron">⌄</span></summary>
+        <div class="legacy-install-body">
+          <p>Las versiones anteriores se distribuían como archivos ZIP, sin el nuevo asistente de instalación.</p>
+          <ol>
+            <li>Descarga el <strong>ZIP</strong> de la versión que quieras probar desde el historial de versiones.</li>
+            <li>Extrae todo su contenido en una carpeta.</li>
+            <li>Ejecuta <strong>Tower.GameCore.exe</strong> (el nombre puede variar según la versión).</li>
+            <li>Si aparece una advertencia de SmartScreen, comprueba primero que el archivo procede de las Releases oficiales y sigue las indicaciones de seguridad anteriores.</li>
+          </ol>
+        </div>
+      </details>
+
+      <p class="notice">SEALSWORN sigue en desarrollo. Puede haber errores o cambios importantes entre versiones. Si detectas un problema, indica la versión y qué estabas haciendo.</p>
       <h3>Compatibilidad y descarga</h3>
-      <p>Disponible para Windows. El tamaño del archivo de la versión actual se muestra junto al botón de descarga. Consulta las notas de cada versión para posibles requisitos adicionales.</p>
+      <p>Disponible para Windows. El tamaño y las descargas de los archivos se muestran junto a sus opciones de descarga. Consulta las notas de cada versión para conocer posibles requisitos adicionales.</p>
     </article>
 
     <article id="controles" class="controls-article">
