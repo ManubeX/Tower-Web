@@ -139,7 +139,7 @@
     }
 
     function downloadLabel(count) {
-        return count.toLocaleString(lang() === "en" ? "en-GB" : "es-ES") + (count === 1 ? " descarga" : " descargas");
+        return count.toLocaleString(lang() === "en" ? "en-GB" : "es-ES") + (count === 1 ? t(" descarga"," download") : t(" descargas"," downloads"));
     }
 
     // Mostrar la última Release.
