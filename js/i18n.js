@@ -136,9 +136,11 @@
   "Errores y limitaciones de las versiones de prueba": "Known issues and limitations of test builds",
   "Estas versiones pueden contener errores o incompatibilidades entre partidas guardadas. Consulta las notas de cada publicación para ver las incidencias conocidas y comunica los problemas indicando la versión y los pasos para reproducirlos.": "These builds may contain bugs or save-game incompatibilities. Check each release's notes for known issues and report problems with the version and steps to reproduce them.",
   "SEALSWORN es un proyecto personal en desarrollo. Esta página sirve como punto de distribución para las versiones de prueba y como archivo de su evolución.": "SEALSWORN is a personal project in development. This website distributes test builds and documents the game's progress.",
+  "Sobre SEALSWORN": "About SEALSWORN",
   "En desarrollo": "In development",
   "Gracias por formar parte de esta aventura": "Thank you for being part of this adventure",
   "Todos los derechos reservados.": "All rights reserved.",
+  "© 2024–2026 ManubeX — Todos los derechos reservados.": "© 2024–2026 ManubeX — All rights reserved.",
   "SEALSWORN es un desarrollo independiente. El contenido de esta web no puede reproducirse sin permiso.": "SEALSWORN is an independent game. Content from this website may not be reproduced without permission."
 };
   const originals = new WeakMap();
@@ -152,11 +154,17 @@
     if (!root || applying) return;
     applying = true;
     try {
+      // Explicit translations for mixed-content footer elements and legal notices.
+      for (const el of root.querySelectorAll("[data-i18n]")) {
+        const key = el.dataset.i18n;
+        const value = tr(key);
+        if (el.textContent !== value) el.textContent = value;
+      }
       const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
       const nodes = [];
       while (walker.nextNode()) nodes.push(walker.currentNode);
       for (const node of nodes) {
-        if (node.parentElement?.closest("script,style,pre,code,[data-no-translate]")) continue;
+        if (node.parentElement?.closest("script,style,pre,code,[data-no-translate],[data-i18n]")) continue;
         if (!originals.has(node)) originals.set(node, node.nodeValue);
         const source = originals.get(node);
         const match = source.match(/^(\s*)([\s\S]*?)(\s*)$/);
