@@ -663,3 +663,13 @@ kbd{
 .topbar .social-x{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
 .topbar .social-x svg{flex:none;display:block}
 @media(max-width:850px){.topbar .social-x-label{display:none}}
+
+/* Social links between the gallery and version history */
+.social-section{margin-top:34px;margin-bottom:40px}
+.social-inner{padding:30px 24px;text-align:center;border:1px solid #365078;border-radius:12px;background:linear-gradient(145deg,#111d32,#0a1121);box-shadow:0 12px 35px #0004}
+.social-inner .section-heading{margin-bottom:20px}
+.social-links{display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+.social-link{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-width:195px;padding:13px 19px;border:1px solid #645284;border-radius:8px;background:#172038;color:#f3eaf9;text-decoration:none;font-weight:700;transition:background .2s,border-color .2s,transform .2s}
+.social-link:hover,.social-link:focus-visible{background:#292044;border-color:#b08ad4;transform:translateY(-2px)}
+.social-link svg{flex:none}
+@media(max-width:520px){.social-inner{padding:24px 14px}.social-link{width:100%}}
