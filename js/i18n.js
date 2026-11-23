@@ -136,6 +136,8 @@
   "Errores y limitaciones de las versiones de prueba": "Known issues and limitations of test builds",
   "Estas versiones pueden contener errores o incompatibilidades entre partidas guardadas. Consulta las notas de cada publicación para ver las incidencias conocidas y comunica los problemas indicando la versión y los pasos para reproducirlos.": "These builds may contain bugs or save-game incompatibilities. Check each release's notes for known issues and report problems with the version and steps to reproduce them.",
   "SEALSWORN es un proyecto personal en desarrollo. Esta página sirve como punto de distribución para las versiones de prueba y como archivo de su evolución.": "SEALSWORN is a personal project in development. This website distributes test builds and documents the game's progress.",
+  "Síguenos en redes": "Follow us",
+  "Noticias, avances y novedades del desarrollo de SEALSWORN.": "News, updates and behind-the-scenes progress on SEALSWORN.",
   "Tráiler oficial": "Official trailer",
   "Descubre SEALSWORN en acción.": "See SEALSWORN in action.",
   "Tráiler": "Trailer",
