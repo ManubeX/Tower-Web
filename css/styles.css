@@ -640,3 +640,7 @@ kbd{
 .legacy-install[open] summary .chevron{transform:rotate(180deg)}
 .legacy-install-body{padding:0 18px 18px}
 @media(max-width:760px){.install-methods{grid-template-columns:1fr}.install-method,.install-warning{padding:15px}}
+
+/* Identidad visual de Windows en la tarjeta de descarga */
+.platform{display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+.windows-logo{display:block;flex:none;color:#c7dcfa}
