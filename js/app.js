@@ -11,18 +11,45 @@
         });
     }
 
-    function renderMarkdown(text) {
-        if (!text || !text.trim()) {
-            return "<p>Esta versión no incluye notas de publicación.</p>";
-        }
+    const i18n = () => window.SEALSWORN_I18N;
+    const lang = () => i18n()?.language || "es";
+    const t = (es, en) => lang() === "en" ? en : es;
+
+    // GitHub Releases bilingual format:
+    // <!-- lang:es -->Spanish Markdown<!-- lang:en -->English Markdown
+    // The original Spanish-only release body remains available as a fallback.
+    function releaseNotes(body) {
+        const source = (body || "").trim();
+        if (!source) return {text:"",fallback:false};
+        const parts = [...source.matchAll(/<!--\s*lang:(es|en)\s*-->/gi)];
+        if (!parts.length) return {text:source,fallback:lang()==="en"};
+        const sections = {};
+        parts.forEach((part,index) => {
+            const from = part.index + part[0].length;
+            const to = index+1 < parts.length ? parts[index+1].index : source.length;
+            sections[part[1].toLowerCase()] = source.slice(from,to).trim();
+        });
+        const selected = sections[lang()];
+        if (selected) return {text:selected,fallback:false};
+        return {text:sections.es || sections.en || source,fallback:true};
+    }
+
+    function renderMarkdown(body) {
+        const notes = releaseNotes(body);
+        const message = t("Esta versión no incluye notas de publicación.", "This release has no notes.");
+        if (!notes.text) return "<p>" + message + "</p>";
+        let content;
         if (typeof marked !== "undefined") {
-            const html = marked.parse(text);
-            return typeof DOMPurify !== "undefined"
+            const html = marked.parse(notes.text);
+            content = typeof DOMPurify !== "undefined"
                 ? DOMPurify.sanitize(html, { USE_PROFILES: { html: true } })
-                : "<pre style='white-space:pre-wrap'>" + esc(text) + "</pre>";
+                : "<pre style='white-space:pre-wrap'>" + esc(notes.text) + "</pre>";
+        } else {
+            content = "<pre style='white-space:pre-wrap'>" + esc(notes.text) + "</pre>";
         }
-        // Fallback si no carga marked: texto plano escapado
-        return "<pre style='white-space:pre-wrap'>" + esc(text) + "</pre>";
+        if (notes.fallback && lang() === "en")
+            return '<p class="notes-language-notice" data-no-translate>Release notes are currently available in Spanish only.</p>' + content;
+        return content;
     }
 
     // Detectar la fase de desarrollo de la Release.
@@ -84,7 +111,7 @@
     // Formatear fecha.
     function date(d) {
         return d
-            ? new Intl.DateTimeFormat("es-ES").format(new Date(d))
+            ? new Intl.DateTimeFormat(lang() === "en" ? "en-GB" : "es-ES").format(new Date(d))
             : "";
     }
 
@@ -103,8 +130,8 @@
     function fileSize(bytes) {
         if (!Number.isFinite(bytes) || bytes < 0) return "";
         return bytes >= 1048576
-            ? (bytes / 1048576).toLocaleString("es-ES", { maximumFractionDigits: 1 }) + " MB"
-            : (bytes / 1024).toLocaleString("es-ES", { maximumFractionDigits: 0 }) + " KB";
+            ? (bytes / 1048576).toLocaleString(lang() === "en" ? "en-GB" : "es-ES", { maximumFractionDigits: 1 }) + " MB"
+            : (bytes / 1024).toLocaleString(lang() === "en" ? "en-GB" : "es-ES", { maximumFractionDigits: 0 }) + " KB";
     }
 
     function downloadCount(assets) {
@@ -112,7 +139,7 @@
     }
 
     function downloadLabel(count) {
-        return count.toLocaleString("es-ES") + (count === 1 ? " descarga" : " descargas");
+        return count.toLocaleString(lang() === "en" ? "en-GB" : "es-ES") + (count === 1 ? " descarga" : " descargas");
     }
 
     // Mostrar la última Release.
@@ -124,7 +151,7 @@
             title(r) || "Versión de pruebas de SEALSWORN";
 
         $("latest-date").textContent =
-            "Publicado el " + date(r.published_at || r.created_at);
+            t("Publicado el ", "Published on ") + date(r.published_at || r.created_at);
 
         const files = r.assets || [];
         const installer = files.find(a => /\.exe$/i.test(a.name) && /setup|install|instal|sealsworn/i.test(a.name))
@@ -145,9 +172,9 @@
         const arrow = document.createElement("span");
         arrow.textContent = "↓";
         main.append(arrow, document.createTextNode(
-            installer ? " DESCARGAR INSTALADOR (.EXE)" :
-            portable ? " DESCARGAR VERSIÓN PORTABLE (.ZIP)" :
-            " VER DESCARGAS EN GITHUB"
+            installer ? t(" DESCARGAR INSTALADOR (.EXE)"," DOWNLOAD INSTALLER (.EXE)") :
+            portable ? t(" DESCARGAR VERSIÓN PORTABLE (.ZIP)"," DOWNLOAD PORTABLE VERSION (.ZIP)") :
+            t(" VER DESCARGAS EN GITHUB"," VIEW DOWNLOADS ON GITHUB")
         ));
 
         if (installer && portable) {
@@ -156,7 +183,7 @@
             link.href = portable.browser_download_url;
             link.target = "_blank";
             link.rel = "noopener";
-            link.textContent = "↓ Descargar versión portable (.zip)";
+            link.textContent = t("↓ Descargar versión portable (.zip)","↓ Download portable version (.zip)");
             const meta = document.createElement("span");
             meta.className = "portable-download-meta";
             meta.textContent = fileSize(portable.size) + " · " + downloadLabel(portable.download_count || 0);
@@ -194,7 +221,7 @@
             const visible = expanded ? older : older.slice(0, 5);
             visible.forEach(r => appendReleaseRow(root, r));
             showAll.hidden = older.length <= 5;
-            showAll.textContent = expanded ? "Ver menos versiones" : "Ver todas las versiones";
+            showAll.textContent = expanded ? t("Ver menos versiones","Show fewer versions") : t("Ver todas las versiones","View all versions");
             showAll.setAttribute("aria-expanded", String(expanded));
         };
         showAll.onclick = () => { expanded = !expanded; renderRows(); };
@@ -227,7 +254,7 @@
                     ${esc(title(r) || "Versión de SEALSWORN")}
                 </span>
                 <span class="release-date">
-                    Publicado el ${date(r.published_at || r.created_at)}
+                    ${t("Publicado el ","Published on ")}${date(r.published_at || r.created_at)}
                 </span>
                 <span class="chevron">⌄</span>
             `;
@@ -251,7 +278,7 @@
                 x.rel = "noopener";
                 const installerFile = /\.exe$/i.test(a.name);
                 const portableFile = /\.zip$/i.test(a.name);
-                x.textContent = "↓ " + (installerFile ? "Instalador (.exe)" : portableFile ? "Versión portable (.zip)" : a.name);
+                x.textContent = "↓ " + (installerFile ? t("Instalador (.exe)","Installer (.exe)") : portableFile ? t("Versión portable (.zip)","Portable version (.zip)") : a.name);
 
                 const meta = document.createElement("span");
                 meta.className = "asset-meta";
@@ -270,7 +297,7 @@
                 x.href = r.html_url;
                 x.target = "_blank";
                 x.rel = "noopener";
-                x.textContent = "Ver publicación en GitHub";
+                x.textContent = t("Ver publicación en GitHub","View release on GitHub");
 
                 assets.append(x);
             }
@@ -285,6 +312,13 @@
             row.append(b, d);
             root.append(row);
     }
+
+    let currentReleases = null;
+    document.addEventListener("sealsworn:language", () => {
+        if (!currentReleases?.length) return;
+        setLatest(currentReleases[0]);
+        list(currentReleases);
+    });
 
     // Cargar Releases desde GitHub.
     async function init() {
@@ -333,6 +367,7 @@
                 return;
             }
 
+            currentReleases = rs;
             // La primera versión será siempre la más reciente numéricamente.
             setLatest(rs[0]);
 
