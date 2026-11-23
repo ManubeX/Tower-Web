@@ -1,6 +1,19 @@
 (() => {
   "use strict";
   const translations = {
+  "Nombres de los ataques enemigos": "Enemy attack names",
+  "Captura de pantalla": "Take screenshot",
+  "Reportar un problema": "Report an issue",
+  "Mochila · Árbol de habilidades · Aliados · Mapa": "Backpack · Skill tree · Allies · Map",
+  "Apuntar (arco y grimorio)": "Aim (bow and grimoire)",
+  "Habilidad del arma": "Weapon skill",
+  "Poción de vida / de maná (huecos rápidos)": "Health / mana potion (quick slots)",
+  "Árbol de habilidades / Mapa": "Skill tree / Map",
+  "Mochila": "Backpack",
+  "Pausa (reportar un problema desde el menú)": "Pause (report an issue from the menu)",
+  "Cambiar de pestaña en los menús": "Switch menu tabs",
+  "Mochila, cofres y tienda": "Backpack, chests and shop",
+  "(<kbd>LB</kbd> / <kbd>RB</kbd> con mando): pasar de pestaña en el libro (mochila, habilidades, aliados y mapa).": "(LB / RB on controller): switch book tabs (backpack, skills, allies and map).",
   "Inicio": "Home",
   "Capturas": "Screenshots",
   "Versiones": "Versions",
