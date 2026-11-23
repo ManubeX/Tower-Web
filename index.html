@@ -2,6 +2,14 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
+  <script>
+    // Redirect legacy GitHub Pages visitors without affecting Cloudflare Pages.
+    if (window.location.hostname === 'manubex.github.io' &&
+        (window.location.pathname === '/Tower-Web' || window.location.pathname.startsWith('/Tower-Web/'))) {
+      const path = window.location.pathname.slice('/Tower-Web'.length) || '/';
+      window.location.replace('https://sealsworn.pages.dev' + path + window.location.search + window.location.hash);
+    }
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#030d19">
   <meta name="apple-mobile-web-app-capable" content="yes">
