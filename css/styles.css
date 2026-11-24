@@ -673,3 +673,10 @@ kbd{
 .social-link:hover,.social-link:focus-visible{background:#292044;border-color:#b08ad4;transform:translateY(-2px)}
 .social-link svg{flex:none}
 @media(max-width:520px){.social-inner{padding:24px 14px}.social-link{width:100%}}
+
+/* Cada descarga alternativa (portable, Android) junto a su tamaño. */
+.download-alt{display:inline-block;max-width:100%}
+
+/* Tramos de las notas que son de una sola plataforma (RELEASE_GUIDELINES §15.3). */
+.platform-block{border-left:3px solid #245a8e;padding-left:12px;margin:12px 0}
+.platform-tag{display:inline-block;color:#9db8db;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase}

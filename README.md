@@ -14,7 +14,7 @@ Este repositorio contiene **el código de la web pública**, no el código fuent
 - **Web principal:** [sealsworn.pages.dev](https://sealsworn.pages.dev/)
 - **Despliegue:** Cloudflare Pages, conectado a la rama `main`.
 - **Dirección anterior:** [GitHub Pages](https://manubex.github.io/Tower-Web/) (redirige a la web principal).
-- **Descargas:** se obtienen de las [Releases de Tower-Downloads](https://github.com/ManubeX/Tower-Downloads/releases).
+- **Descargas:** se obtienen de las [Releases de Sealsworn/Downloads](https://github.com/Sealsworn/Downloads/releases).
 
 ## Probar SEALSWORN
 
@@ -30,7 +30,7 @@ Sitio estático construido con HTML, CSS y JavaScript, sin proceso de compilaci�
 
 - [Web oficial](https://sealsworn.pages.dev/)
 - [X · @Sealsworn](https://x.com/Sealsworn)
-- [Historial de versiones y archivos](https://github.com/ManubeX/Tower-Downloads/releases)
+- [Historial de versiones y archivos](https://github.com/Sealsworn/Downloads/releases)
 
 ---
 

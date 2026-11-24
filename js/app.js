@@ -29,32 +29,66 @@
             const to = index+1 < parts.length ? parts[index+1].index : source.length;
             sections[part[1].toLowerCase()] = source.slice(from,to).trim();
         });
+        // La raya "---" que separa un idioma del siguiente sobra al final del bloque.
+        const trim = s => s.replace(/(?:\s*\n\s*(?:-{3,}|\*{3,}|_{3,})\s*)+$/, "").trim();
         const selected = sections[lang()];
-        if (selected) return {text:selected,fallback:false};
-        return {text:sections.es || sections.en || source,fallback:true};
+        if (selected) return {text:trim(selected),fallback:false};
+        return {text:trim(sections.es || sections.en || source),fallback:true};
+    }
+
+    // Marcadores de plataforma de RELEASE_GUIDELINES §13: <!-- plataforma: X -->.
+    // "todas" (o sin marcador, como las releases antiguas) es contenido general.
+    const PLATFORMS = {
+        pc: { label: () => t("🖥️ Solo Windows", "🖥️ Windows only"), word: /windows/i },
+        android: { label: () => t("📱 Solo Android", "📱 Android only"), word: /android/i },
+        linux: { label: () => t("🐧 Solo Linux", "🐧 Linux only"), word: /linux/i }
+    };
+
+    // Parte las notas en tramos por marcador de plataforma, en el orden original.
+    function platformChunks(text) {
+        const parts = text.split(/<!--\s*plataforma\s*:\s*([a-z]+)\s*-->/i);
+        const chunks = [{ platform: "todas", text: parts[0] }];
+        for (let i = 1; i < parts.length; i += 2)
+            chunks.push({ platform: parts[i].toLowerCase(), text: parts[i + 1] });
+        return chunks.filter(c => c.text.replace(/<!--[\s\S]*?-->/g, "").trim());
+    }
+
+    function markdownHtml(text) {
+        // Los comentarios HTML (marcadores) no se enseñan nunca (§15.3).
+        text = text.replace(/<!--[\s\S]*?-->/g, "");
+        if (typeof marked === "undefined" || typeof DOMPurify === "undefined")
+            return "<pre style='white-space:pre-wrap'>" + esc(text) + "</pre>";
+        return DOMPurify.sanitize(marked.parse(text), { USE_PROFILES: { html: true } });
     }
 
     function renderMarkdown(body) {
         const notes = releaseNotes(body);
         const message = t("Esta versión no incluye notas de publicación.", "This release has no notes.");
         if (!notes.text) return "<p>" + message + "</p>";
-        let content;
-        if (typeof marked !== "undefined") {
-            const html = marked.parse(notes.text);
-            content = typeof DOMPurify !== "undefined"
-                ? DOMPurify.sanitize(html, { USE_PROFILES: { html: true } })
-                : "<pre style='white-space:pre-wrap'>" + esc(notes.text) + "</pre>";
-        } else {
-            content = "<pre style='white-space:pre-wrap'>" + esc(notes.text) + "</pre>";
-        }
+
+        // Lo que es de una sola plataforma va con borde y etiqueta, para no
+        // confundirlo con lo general (§15.3). Si el tramo ya empieza con un título
+        // que nombra la plataforma ("## 📱 Android"), basta con el borde.
+        const content = platformChunks(notes.text).map(c => {
+            const html = markdownHtml(c.text);
+            const p = PLATFORMS[c.platform];
+            if (!p) return html;
+            const first = c.text.replace(/<!--[\s\S]*?-->/g, "").trim().split("\n")[0];
+            const named = /^#/.test(first) && p.word.test(first);
+            const tag = named ? "" : `<span class="platform-tag">${p.label()}</span>`;
+            return `<div class="platform-block">${tag}${html}</div>`;
+        }).join("");
+
         if (notes.fallback && lang() === "en")
             return '<p class="notes-language-notice" data-no-translate>Release notes are currently available in Spanish only.</p>' + content;
         return content;
     }
 
     // Detectar la fase de desarrollo de la Release.
+    // Solo mira lo anterior a " | " (§5.2): el nombre de la actualización
+    // podría contener palabras como "Beta".
     function phase(t) {
-        t = (t || "").toLowerCase();
+        t = (t || "").split("|")[0].toLowerCase();
 
         if (t.includes("pre-alpha") || t.includes("prealpha"))
             return "PRE-ALPHA";
@@ -98,14 +132,22 @@
     }
 
     // Mostrar únicamente el nombre descriptivo, sin fase ni versión duplicada.
+    // - "SEALSWORN — Alpha 0.23.0 | Sworn in Your Hands" → "Sworn in Your Hands" (§5.2)
+    // - "SEALSWORN — Alpha 0.23.1" (sin nombre)          → texto por defecto (§5.1)
+    // - "Alpha 0.21.7b Tower" (títulos antiguos)          → texto por defecto
     function title(r) {
         let name = (r.name || "").trim();
+        const bar = name.indexOf("|");
+        if (bar >= 0) name = name.slice(bar + 1).trim();
+        else name = name.replace(/^sealsworn\s*[—–-]?\s*/i, "");
         name = name.replace(/^(?:pre[- ]?alpha|alpha|beta|stable|estable|release|versi[oó]n)\b\s*[:—–-]?\s*/i, "");
         const tag = (r.tag_name || "").replace(/^v/i, "");
         if (tag) name = name.replace(new RegExp("^v?" + tag.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "(?=\\s|$|[-—–:])", "i"), "").trim();
         name = name.replace(/^v?\d+\.\d+(?:\.\d+)*(?:[a-z]+)?\s*[:—–-]?\s*/i, "");
         name = name.replace(/^[:—–-]\s*/, "").trim();
-        return name || "Novedades de SEALSWORN";
+        // En los títulos antiguos solo quedaba el nombre interno ("Tower").
+        name = name.replace(/^tower$/i, "");
+        return name || t("Novedades de SEALSWORN", "SEALSWORN update");
     }
 
     // Formatear fecha.
@@ -138,6 +180,20 @@
         return (assets || []).reduce((sum, asset) => sum + (asset.download_count || 0), 0);
     }
 
+    // Etiqueta de cada archivo por su nombre (§9). Vale para los nombres nuevos
+    // (SEALSWORN-0.23.0-Android.apk) y los antiguos (Tower-0.18.1i.zip,
+    // Sealsworn_Setup_0.22.0.exe). Lo que no reconoce se enseña con su nombre.
+    function assetLabel(a) {
+        const n = a.name || "";
+        const arch = (n.match(/-(arm64|armv7)\b/i) || [])[1];
+        if (/\.apk$/i.test(n)) return "Android (.apk)" + (arch ? " " + arch : "");
+        if (/\.exe$/i.test(n)) return t("Instalador (.exe)", "Installer (.exe)");
+        if (/\.zip$/i.test(n) && /linux/i.test(n)) return "Linux (.zip)";
+        if (/\.zip$/i.test(n) && /macos/i.test(n)) return "macOS (.zip)";
+        if (/\.zip$/i.test(n)) return t("Versión portable (.zip)", "Portable version (.zip)");
+        return n;
+    }
+
     function downloadLabel(count) {
         return count.toLocaleString(lang() === "en" ? "en-GB" : "es-ES") + (count === 1 ? t(" descarga"," download") : t(" descargas"," downloads"));
     }
@@ -156,8 +212,11 @@
         const files = r.assets || [];
         const installer = files.find(a => /\.exe$/i.test(a.name) && /setup|install|instal|sealsworn/i.test(a.name))
             || files.find(a => /\.exe$/i.test(a.name));
-        const portable = files.find(a => /\.zip$/i.test(a.name));
-        const primary = installer || portable || files[0];
+        // El ZIP portátil es de Windows: no confundirlo con un ZIP de Linux o macOS.
+        const portable = files.find(a => /\.zip$/i.test(a.name) && !/linux|macos/i.test(a.name));
+        const apk = files.find(a => /\.apk$/i.test(a.name));
+        // El botón grande nunca es el APK: si no hay nada de Windows, lleva a GitHub.
+        const primary = installer || portable || files.find(a => a !== apk);
         const alternatives = $("download-alternatives");
         alternatives.replaceChildren();
         alternatives.hidden = true;
@@ -187,7 +246,24 @@
             const meta = document.createElement("span");
             meta.className = "portable-download-meta";
             meta.textContent = fileSize(portable.size) + " · " + downloadLabel(portable.download_count || 0);
-            alternatives.append(link, meta);
+            alternatives.append(Object.assign(document.createElement("span"), { className: "download-alt" }));
+            alternatives.lastChild.append(link, " ", meta);
+            alternatives.hidden = false;
+        }
+
+        // Descarga de Android, con su etiqueta, debajo de la de Windows.
+        if (apk) {
+            const link = document.createElement("a");
+            link.className = "portable-download";
+            link.href = apk.browser_download_url;
+            link.target = "_blank";
+            link.rel = "noopener";
+            link.textContent = t("↓ Descargar para Android (.apk)", "↓ Download for Android (.apk)");
+            const meta = document.createElement("span");
+            meta.className = "portable-download-meta";
+            meta.textContent = fileSize(apk.size) + " · " + downloadLabel(apk.download_count || 0);
+            alternatives.append(Object.assign(document.createElement("span"), { className: "download-alt" }));
+            alternatives.lastChild.append(link, " ", meta);
             alternatives.hidden = false;
         }
 
@@ -276,9 +352,8 @@
                 x.href = a.browser_download_url;
                 x.target = "_blank";
                 x.rel = "noopener";
-                const installerFile = /\.exe$/i.test(a.name);
-                const portableFile = /\.zip$/i.test(a.name);
-                x.textContent = "↓ " + (installerFile ? t("Instalador (.exe)","Installer (.exe)") : portableFile ? t("Versión portable (.zip)","Portable version (.zip)") : a.name);
+                x.textContent = "↓ " + assetLabel(a);
+                x.title = a.name;
 
                 const meta = document.createElement("span");
                 meta.className = "asset-meta";
@@ -380,7 +455,7 @@
             $("load-error").replaceChildren(
                 document.createTextNode("No se han podido cargar las versiones. "),
                 Object.assign(document.createElement("a"), {
-                    href: "https://github.com/ManubeX/Tower-Downloads/releases",
+                    href: "https://github.com/" + repo + "/releases",
                     textContent: "Consultar las descargas en GitHub",
                     target: "_blank", rel: "noopener"
                 })
@@ -405,7 +480,7 @@
 
         const fallback = [{"full":"assets/images/capturas/01_torbellino_cementerio.webp","thumb":"assets/images/capturas/01_torbellino_cementerio_640.webp","alt":"Ataque giratorio en el cementerio","title":"Torbellino en el cementerio"},{"full":"assets/images/capturas/02_nova_circulo_nigromante.webp","thumb":"assets/images/capturas/02_nova_circulo_nigromante_640.webp","alt":"Hechizo de nova en el círculo del nigromante","title":"Nova en el círculo del nigromante"},{"full":"assets/images/capturas/03_lluvia_flechas_galeria.webp","thumb":"assets/images/capturas/03_lluvia_flechas_galeria_640.webp","alt":"Ataque de lluvia de flechas en una galería","title":"Lluvia de flechas"},{"full":"assets/images/capturas/04_rayo_mausoleo.webp","thumb":"assets/images/capturas/04_rayo_mausoleo_640.webp","alt":"Hechizo de rayo en el mausoleo","title":"Rayo en el mausoleo"},{"full":"assets/images/capturas/05_gran_entrada.webp","thumb":"assets/images/capturas/05_gran_entrada_640.webp","alt":"Gran entrada de la mazmorra","title":"La gran entrada"},{"full":"assets/images/capturas/06_gran_nigromante_primer_plano.webp","thumb":"assets/images/capturas/06_gran_nigromante_primer_plano_640.webp","alt":"Primer plano del Gran Nigromante","title":"El Gran Nigromante"},{"full":"assets/images/capturas/07_rey_esqueleto_primer_plano.webp","thumb":"assets/images/capturas/07_rey_esqueleto_primer_plano_640.webp","alt":"Primer plano del Rey Esqueleto","title":"El Rey Esqueleto"}];
         const root = "assets/images/capturas/";
-        const api = "https://api.github.com/repos/ManubeX/Tower-Web/contents/" + root + "?ref=main";
+        const api = "https://api.github.com/repos/Sealsworn/Web/contents/" + root + "?ref=main";
         let shots = [];
         let expanded = false;
         let current = 0;
